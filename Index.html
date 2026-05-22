@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Directors Visit — Game Plan</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap');
+:root{
+  --bg:#f7f5f0;--white:#fff;--border:#e4dfd4;--surface:#fdfcf9;
+  --amber:#c07d0a;--amber-bg:#fef9ee;--amber-border:#f0d690;
+  --blue:#2563c4;--blue-bg:#eef4ff;--blue-border:#bcd0f5;
+  --green:#1a9455;--green-bg:#edfaf3;--green-border:#9de8c0;
+  --red:#c42525;--red-bg:#fff0f0;--red-border:#f5b8b8;
+  --text:#1c1914;--muted:#7a7469;
+  --shadow:0 2px 12px rgba(0,0,0,.07);--shadow-sm:0 1px 4px rgba(0,0,0,.06);
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;min-height:100vh;padding:0 0 60px;}
+
+/* HEADER */
+.header{background:var(--white);border-bottom:1px solid var(--border);padding:32px 24px 28px;text-align:center;}
+.eyebrow{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:3px;color:var(--amber);text-transform:uppercase;margin-bottom:10px;}
+h1{font-family:'Bebas Neue',sans-serif;font-size:clamp(56px,12vw,96px);line-height:.9;letter-spacing:2px;color:var(--text);}
+h1 span{color:var(--amber);}
+.subtitle{margin-top:12px;font-size:13px;color:var(--muted);letter-spacing:1px;font-family:'DM Mono',monospace;}
+
+/* IDENTITY BAR */
+.identity-bar{background:var(--amber-bg);border-bottom:1px solid var(--amber-border);padding:10px 24px;display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap;}
+.identity-label{font-size:11px;font-family:'DM Mono',monospace;color:var(--amber);letter-spacing:1px;text-transform:uppercase;}
+.identity-select{font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;padding:5px 10px;border:1.5px solid var(--amber-border);border-radius:6px;background:var(--white);color:var(--text);cursor:pointer;}
+.sync-label{font-size:11px;font-family:'DM Mono',monospace;color:var(--muted);display:flex;align-items:center;gap:5px;margin-left:auto;}
+.sync-dot{width:7px;height:7px;border-radius:50%;background:#ccc;flex-shrink:0;transition:background .3s;}
+.sync-dot.live{background:var(--green);}
+.sync-dot.error{background:var(--red);}
+
+/* MAIN */
+.main{max-width:780px;margin:0 auto;padding:32px 16px 0;}
+.sec{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:3px;color:var(--amber);text-transform:uppercase;margin-bottom:16px;display:flex;align-items:center;gap:10px;}
+.sec::after{content:'';flex:1;height:1px;background:var(--border);}
+
+/* PROGRESS */
+.progress-card{background:var(--white);border:1px solid var(--border);border-radius:12px;padding:20px 24px;margin-bottom:36px;box-shadow:var(--shadow-sm);}
+.progress-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;}
+.progress-title{font-size:10px;font-weight:600;color:var(--muted);font-family:'DM Mono',monospace;letter-spacing:2px;text-transform:uppercase;}
+.progress-pct{font-family:'Bebas Neue',sans-serif;font-size:28px;color:var(--amber);}
+.pbar-bg{height:8px;background:var(--bg);border-radius:99px;overflow:hidden;border:1px solid var(--border);}
+.pbar-fill{height:100%;background:linear-gradient(90deg,var(--amber),#e8a820);border-radius:99px;width:0%;transition:width .5s ease;}
+.progress-sub{font-size:12px;color:var(--muted);margin-top:8px;font-family:'DM Mono',monospace;}
+.owner-progress{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px;padding-top:12px;border-top:1px solid var(--border);}
+.owner-chip{font-size:11px;font-family:'DM Mono',monospace;padding:4px 10px;border-radius:99px;border:1px solid var(--border);background:var(--surface);color:var(--muted);}
+
+/* TIMELINE */
+.timeline{display:flex;flex-direction:column;gap:0;margin-bottom:40px;}
+.tl-item{display:grid;grid-template-columns:80px 24px 1fr;gap:0 16px;align-items:start;}
+.tl-time{text-align:right;font-family:'DM Mono',monospace;font-size:11px;color:var(--amber);padding-top:18px;line-height:1.3;}
+.tl-line{display:flex;flex-direction:column;align-items:center;}
+.tl-dot{width:10px;height:10px;border-radius:50%;background:var(--amber);margin-top:22px;flex-shrink:0;border:2px solid var(--white);outline:2px solid var(--amber);z-index:1;}
+.tl-connector{width:1.5px;flex:1;min-height:16px;background:var(--border);margin-top:3px;}
+.tl-item:last-child .tl-connector{display:none;}
+.tl-card{background:var(--white);border:1px solid var(--border);border-radius:10px;padding:14px 18px;margin-bottom:12px;box-shadow:var(--shadow-sm);}
+.tl-card:hover{border-color:var(--amber-border);}
+.tl-title{font-size:15px;font-weight:600;color:var(--text);margin-bottom:4px;}
+.tl-desc{font-size:13px;color:var(--muted);line-height:1.6;}
+.tl-tag{display:inline-block;font-size:10px;font-family:'DM Mono',monospace;letter-spacing:1px;padding:2px 8px;border-radius:4px;margin-top:8px;text-transform:uppercase;}
+.tag-tour{background:var(--blue-bg);color:var(--blue);border:1px solid var(--blue-border);}
+.tag-qa{background:var(--amber-bg);color:var(--amber);border:1px solid var(--amber-border);}
+.tag-ops{background:var(--green-bg);color:var(--green);border:1px solid var(--green-border);}
+.tag-wrap{background:var(--red-bg);color:var(--red);border:1px solid var(--red-border);}
+
+/* STAFFING */
+.staff-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(155px,1fr));gap:12px;margin-bottom:40px;}
+.staff-card{background:var(--white);border:1px solid var(--border);border-radius:10px;padding:18px 16px;box-shadow:var(--shadow-sm);position:relative;overflow:hidden;}
+.staff-card::before{content:'';position:absolute;top:0;left:0;width:3px;height:100%;}
+.staff-card.y::before{background:var(--amber);}
+.staff-card.b::before{background:var(--blue);}
+.staff-card.g::before{background:var(--green);}
+.staff-role{font-size:10px;font-family:'DM Mono',monospace;color:var(--muted);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:8px;}
+.staff-pair{font-family:'Bebas Neue',sans-serif;font-size:38px;line-height:1;margin-bottom:6px;}
+.staff-pair .n{color:var(--amber);}
+.staff-pair .sep{color:var(--border);font-size:26px;margin:0 3px;}
+.staff-pair .d{color:var(--text);}
+.staff-desc-s{font-size:12px;color:var(--muted);line-height:1.5;}
+
+/* CHECKLIST */
+.check-cols{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:40px;}
+@media(max-width:560px){.check-cols{grid-template-columns:1fr;}}
+.check-group{background:var(--white);border:1px solid var(--border);border-radius:12px;padding:20px 18px;box-shadow:var(--shadow-sm);}
+.cg-title{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--blue);margin-bottom:14px;padding-bottom:10px;border-bottom:1px solid var(--border);}
+
+/* TASK ITEM */
+.task{border-radius:8px;padding:8px 6px;margin-bottom:4px;transition:background .12s;}
+.task:hover{background:var(--bg);}
+.task-row{display:flex;align-items:flex-start;gap:10px;cursor:pointer;user-select:none;}
+.check-box{width:18px;height:18px;border:1.5px solid var(--border);border-radius:5px;flex-shrink:0;margin-top:2px;display:flex;align-items:center;justify-content:center;transition:all .2s;background:var(--white);}
+.task.done .check-box{background:var(--green);border-color:var(--green);}
+.task.done .check-box::after{content:'✓';font-size:11px;font-weight:700;color:#fff;}
+.task.done .task-text{text-decoration:line-through;color:var(--muted);}
+.task-text{font-size:13px;font-weight:500;color:var(--text);line-height:1.45;flex:1;transition:color .2s;}
+
+/* TASK META (assign + notes) */
+.task-meta{margin-left:28px;margin-top:6px;}
+
+/* MULTI-ASSIGN */
+.assign-area{position:relative;}
+.assignees-display{display:flex;flex-wrap:wrap;align-items:center;gap:4px;min-height:24px;}
+.assignee-pill{display:inline-flex;align-items:center;gap:4px;font-size:10px;font-family:'DM Mono',monospace;padding:2px 7px;border-radius:4px;cursor:default;}
+.assignee-pill .swatch{width:6px;height:6px;border-radius:50%;}
+.assign-btn{font-size:10px;font-family:'DM Mono',monospace;padding:2px 8px;border:1px dashed var(--border);border-radius:4px;color:var(--muted);cursor:pointer;background:none;transition:all .15s;white-space:nowrap;}
+.assign-btn:hover{border-color:var(--amber);color:var(--amber);}
+
+/* ASSIGN DROPDOWN */
+.assign-dropdown{display:none;position:absolute;top:calc(100% + 4px);left:0;background:var(--white);border:1px solid var(--border);border-radius:8px;box-shadow:var(--shadow);z-index:50;min-width:160px;padding:6px;}
+.assign-dropdown.open{display:block;}
+.assign-option{display:flex;align-items:center;gap:8px;padding:6px 8px;border-radius:5px;cursor:pointer;font-size:12px;transition:background .12s;}
+.assign-option:hover{background:var(--bg);}
+.assign-option input[type=checkbox]{accent-color:var(--amber);width:13px;height:13px;cursor:pointer;flex-shrink:0;}
+.assign-option-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
+.assign-option-name{font-family:'DM Mono',monospace;font-size:11px;}
+.assign-empty{font-size:11px;font-family:'DM Mono',monospace;color:var(--muted);padding:6px 8px;font-style:italic;}
+
+/* DONE-BY */
+.done-by-label{font-size:10px;font-family:'DM Mono',monospace;color:var(--muted);margin-top:3px;}
+
+/* NOTES */
+.notes-area{margin-top:6px;}
+.notes-toggle{display:inline-flex;align-items:center;gap:4px;font-size:10px;font-family:'DM Mono',monospace;color:var(--muted);cursor:pointer;padding:1px 0;border:none;background:none;transition:color .15s;}
+.notes-toggle:hover{color:var(--amber);}
+.notes-toggle.has-note{color:var(--blue);}
+.notes-body{display:none;margin-top:6px;}
+.notes-body.open{display:block;}
+.notes-textarea{width:100%;font-family:'DM Sans',sans-serif;font-size:12px;color:var(--text);background:var(--bg);border:1px solid var(--border);border-radius:6px;padding:8px 10px;resize:vertical;min-height:56px;line-height:1.5;transition:border-color .15s;}
+.notes-textarea:focus{outline:none;border-color:var(--amber);}
+.notes-textarea::placeholder{color:var(--muted);}
+.notes-save-status{font-size:10px;font-family:'DM Mono',monospace;color:var(--muted);margin-top:3px;}
+
+/* TIPS */
+.tips-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:40px;}
+@media(max-width:540px){.tips-grid{grid-template-columns:1fr;}}
+.tip-card{background:var(--white);border:1px solid var(--border);border-radius:10px;padding:16px;box-shadow:var(--shadow-sm);display:flex;gap:12px;align-items:flex-start;}
+.tip-card:hover{border-color:var(--amber-border);}
+.tip-icon{font-size:20px;flex-shrink:0;line-height:1;margin-top:2px;}
+.tip-title{font-size:13px;font-weight:600;margin-bottom:4px;}
+.tip-body{font-size:12px;color:var(--muted);line-height:1.6;}
+
+/* TEAM */
+.team-section{background:var(--white);border:1px solid var(--border);border-radius:12px;padding:18px;margin-bottom:28px;box-shadow:var(--shadow-sm);}
+.team-list{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px;min-height:28px;}
+.team-pill{display:flex;align-items:center;gap:6px;font-size:11px;font-family:'DM Mono',monospace;padding:4px 10px;border-radius:99px;background:var(--amber-bg);border:1px solid var(--amber-border);color:var(--text);}
+.team-pill .swatch{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
+.team-pill .remove{cursor:pointer;color:var(--muted);font-size:15px;line-height:1;margin-left:2px;}
+.team-pill .remove:hover{color:var(--red);}
+.team-add-row{display:flex;gap:8px;}
+.team-input{flex:1;font-family:'DM Sans',sans-serif;font-size:13px;padding:7px 10px;border:1px solid var(--border);border-radius:6px;background:var(--bg);color:var(--text);}
+.team-input:focus{outline:none;border-color:var(--amber);}
+.team-add-btn{font-size:11px;padding:7px 14px;border:1px solid var(--amber);background:var(--amber-bg);border-radius:6px;color:var(--amber);cursor:pointer;font-family:'DM Mono',monospace;letter-spacing:1px;white-space:nowrap;}
+.team-add-btn:hover{background:var(--amber);color:#fff;}
+
+/* MODAL */
+.modal-bg{display:none;position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:200;align-items:center;justify-content:center;}
+.modal-bg.open{display:flex;}
+.modal{background:var(--white);border:1px solid var(--border);border-radius:14px;padding:28px;max-width:340px;width:90%;box-shadow:0 8px 40px rgba(0,0,0,.15);}
+.modal h2{font-family:'Bebas Neue',sans-serif;font-size:30px;margin-bottom:6px;color:var(--text);}
+.modal h2 span{color:var(--amber);}
+.modal p{font-size:13px;color:var(--muted);margin-bottom:16px;line-height:1.6;}
+.modal input{width:100%;font-family:'DM Sans',sans-serif;font-size:14px;padding:9px 12px;border:1.5px solid var(--border);border-radius:8px;background:var(--bg);color:var(--text);margin-bottom:10px;}
+.modal input:focus{outline:none;border-color:var(--amber);}
+.modal-btn{width:100%;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:600;padding:10px;border:none;border-radius:8px;background:var(--amber);color:#fff;cursor:pointer;}
+.modal-btn:hover{background:#a86c08;}
+</style>
+</head>
+<body>
+
+<!-- MODAL -->
+<div class="modal-bg" id="modal">
+  <div class="modal">
+    <h2>Hey — <span>who are you?</span></h2>
+    <p>Enter your name so your teammates can see who checked off tasks and made assignments.</p>
+    <input type="text" id="name-input" placeholder="e.g. Chris, AGM, Lead 1..." maxlength="30" />
+    <button class="modal-btn" onclick="saveName()">Let's Go →</button>
+  </div>
+</div>
+
+<!-- HEADER -->
+<div class="header">
+  <div class="eyebrow">Tolleson Site</div>
+  <h1>Directors<br><span>Visit</span></h1>
+  <div class="subtitle">Operational Game Plan &nbsp;·&nbsp; Next Week</div>
+</div>
+
+<!-- IDENTITY BAR -->
+<div class="identity-bar">
+  <span class="identity-label">Viewing as:</span>
+  <select class="identity-select" id="identity-select" onchange="switchUser()"></select>
+  <span class="sync-label">
+    <span class="sync-dot" id="sync-dot"></span>
+    <span id="sync-label">Connecting...</span>
+  </span>
+</div>
+
+<div class="main">
+
+  <!-- TEAM -->
+  <div class="sec">Team</div>
+  <div class="team-section">
+    <div class="team-list" id="team-list"></div>
+    <div class="team-add-row">
+      <input class="team-input" type="text" id="team-input" placeholder="Add team member name..." maxlength="30" onkeydown="if(event.key==='Enter')addMember()"/>
+      <button class="team-add-btn" onclick="addMember()">+ Add</button>
+    </div>
+  </div>
+
+  <!-- PROGRESS -->
+  <div class="sec">Progress</div>
+  <div class="progress-card">
+    <div class="progress-top">
+      <div class="progress-title">Overall Completion</div>
+      <div class="progress-pct" id="pct">0%</div>
+    </div>
+    <div class="pbar-bg"><div class="pbar-fill" id="pbar"></div></div>
+    <div class="progress-sub" id="psub">0 of 0 tasks complete</div>
+    <div class="owner-progress" id="owner-progress"></div>
+  </div>
+
+  <!-- TIMELINE -->
+  <div class="sec">Day-Of Schedule</div>
+  <div class="timeline">
+    <div class="tl-item"><div class="tl-time">1:00 PM</div><div class="tl-line"><div class="tl-dot"></div><div class="tl-connector"></div></div><div class="tl-card"><div class="tl-title">Directors Arrive</div><div class="tl-desc">Greet at entrance. Have water/refreshments ready. Confirm headcount and assign pairing groups.</div><span class="tl-tag tag-ops">Logistics</span></div></div>
+    <div class="tl-item"><div class="tl-time">1:00–1:15</div><div class="tl-line"><div class="tl-dot"></div><div class="tl-connector"></div></div><div class="tl-card"><div class="tl-title">Facility Tour — Setting the Stage</div><div class="tl-desc">Walk directors through vehicle quality flow. Highlight key touchpoints, equipment, and current production state.</div><span class="tl-tag tag-tour">Tour</span></div></div>
+    <div class="tl-item"><div class="tl-time">1:15–1:30</div><div class="tl-line"><div class="tl-dot"></div><div class="tl-connector"></div></div><div class="tl-card"><div class="tl-title">Intro with Chris & Candice</div><div class="tl-desc">Introduce yourselves — role, time in role. Share key Tolleson stats: weekly returns, LS, QCs, and production numbers.</div><span class="tl-tag tag-qa">QA Brief</span></div></div>
+    <div class="tl-item"><div class="tl-time">1:30–3:30</div><div class="tl-line"><div class="tl-dot"></div><div class="tl-connector"></div></div><div class="tl-card"><div class="tl-title">Lot Sweep & Return QC</div><div class="tl-desc">2 hours of active floor work. Run lot sweep groups and return QC simultaneously. Use new car to shift personnel as needed.</div><span class="tl-tag tag-qa">Core Activity</span></div></div>
+    <div class="tl-item"><div class="tl-time">3:30–3:40</div><div class="tl-line"><div class="tl-dot"></div><div class="tl-connector"></div></div><div class="tl-card"><div class="tl-title">Wrap & Debrief</div><div class="tl-desc">Gather all groups. Recap observations, wins, and action items. Keep it tight — shuttle leaves at 4.</div><span class="tl-tag tag-wrap">Debrief</span></div></div>
+    <div class="tl-item"><div class="tl-time">4:00 PM</div><div class="tl-line"><div class="tl-dot"></div><div class="tl-connector"></div></div><div class="tl-card"><div class="tl-title">Shuttle Out</div><div class="tl-desc">All directors loaded and departing. Ensure shuttle is staged and ready by 3:55.</div><span class="tl-tag tag-ops">Logistics</span></div></div>
+  </div>
+
+  <!-- STAFFING -->
+  <div class="sec">Staffing Pairings — 16 Directors Total</div>
+  <div class="staff-grid">
+    <div class="staff-card y"><div class="staff-role">Return QC</div><div class="staff-pair"><span class="n">2</span><span class="sep">:</span><span class="d">4</span></div><div class="staff-desc-s">2 Return QC techs with 4 directors</div></div>
+    <div class="staff-card b"><div class="staff-role">Lot Sweep</div><div class="staff-pair"><span class="n">5</span><span class="sep">:</span><span class="d">10</span></div><div class="staff-desc-s">5 Lot Sweep techs with 10 directors</div></div>
+    <div class="staff-card g"><div class="staff-role">Recon QC</div><div class="staff-pair"><span class="n">1</span><span class="sep">:</span><span class="d">2</span></div><div class="staff-desc-s">1 Recon QC tech with 2 directors</div></div>
+    <div class="staff-card y"><div class="staff-role">OT Coverage</div><div class="staff-pair" style="font-size:22px;color:var(--amber);padding-top:6px;font-family:'DM Sans';font-weight:600;">Confirm Early</div><div class="staff-desc-s">OT for all Return Inspection Techs</div></div>
+  </div>
+
+  <!-- CHECKLIST -->
+  <div class="sec">Pre-Visit Checklist</div>
+  <div class="check-cols" id="checklist-root">
+
+    <div class="check-group">
+      <div class="cg-title">🗓 People & Scheduling</div>
+      <div class="task" data-id="ot-confirm"><div class="task-row" onclick="toggleTask('ot-confirm')"><div class="check-box"></div><div class="task-text">Confirm OT for all Return Inspection Techs</div></div><div class="task-meta"><div class="assign-area"><div class="assignees-display" id="assignees-ot-confirm"></div><div class="assign-dropdown" id="drop-ot-confirm"></div></div><div class="done-by-label" id="doneby-ot-confirm"></div><div class="notes-area"><button class="notes-toggle" id="ntoggle-ot-confirm" onclick="toggleNote('ot-confirm')">📝 Add note</button><div class="notes-body" id="nbody-ot-confirm"><textarea class="notes-textarea" id="note-ot-confirm" placeholder="Add a note, update, or issue..." oninput="scheduleNoteSave('ot-confirm')"></textarea><div class="notes-save-status" id="nstatus-ot-confirm"></div></div></div></div></div>
+      <div class="task" data-id="notify-cc"><div class="task-row" onclick="toggleTask('notify-cc')"><div class="check-box"></div><div class="task-text">Notify Chris & Candice of intro segment timing (15 min)</div></div><div class="task-meta"><div class="assign-area"><div class="assignees-display" id="assignees-notify-cc"></div><div class="assign-dropdown" id="drop-notify-cc"></div></div><div class="done-by-label" id="doneby-notify-cc"></div><div class="notes-area"><button class="notes-toggle" id="ntoggle-notify-cc" onclick="toggleNote('notify-cc')">📝 Add note</button><div class="notes-body" id="nbody-notify-cc"><textarea class="notes-textarea" id="note-notify-cc" placeholder="Add a note, update, or issue..." oninput="scheduleNoteSave('notify-cc')"></textarea><div class="notes-save-status" id="nstatus-notify-cc"></div></div></div></div></div>
+      <div class="task" data-id="assign-groups"><div class="task-row" onclick="toggleTask('assign-groups')"><div class="check-box"></div><div class="task-text">Assign staff to pairing groups (Return QC, Lot Sweep, Recon QC)</div></div><div class="task-meta"><div class="assign-area"><div class="assignees-display" id="assignees-assign-groups"></div><div class="assign-dropdown" id="drop-assign-groups"></div></div><div class="done-by-label" id="doneby-assign-groups"></div><div class="notes-area"><button class="notes-toggle" id="ntoggle-assign-groups" onclick="toggleNote('assign-groups')">📝 Add note</button><div class="notes-body" id="nbody-assign-groups"><textarea class="notes-textarea" id="note-assign-groups" placeholder="Add a note, update, or issue..." oninput="scheduleNoteSave('assign-groups')"></textarea><div class="notes-save-status" id="nstatus-assign-groups"></div></div></div></div></div>
+      <div class="task" data-id="headcount"><div class="task-row" onclick="toggleTask('headcount')"><div class="check-box"></div><div class="task-text">Confirm director headcount (16 expected)</div></div><div class="task-meta"><div class="assign-area"><div class="assignees-display" id="assignees-headcount"></div><div class="assign-dropdown" id="drop-headcount"></div></div><div class="done-by-label" id="doneby-headcount"></div><div class="notes-area"><button class="notes-toggle" id="ntoggle-headcount" onclick="toggleNote('headcount')">📝 Add note</button><div class="notes-body" id="nbody-headcount"><textarea class="notes-textarea" id="note-headcount" placeholder="Add a note, update, or issue..." oninput="scheduleNoteSave('headcount')"></textarea><div class="notes-save-status" id="nstatus-headcount"></div></div></div></div></div>
+      <div class="task" data-id="new-car"><div class="task-row" onclick="toggleTask('new-car')"><div class="check-box"></div><div class="task-text">Stage new car for personnel shifts as needed</div></div><div class="task-meta"><div class="assign-area"><div class="assignees-display" id="assignees-new-car"></div><div class="assign-dropdown" id="drop-new-car"></div></div><div class="done-by-label" id="doneby-new-car"></div><div class="notes-area"><button class="notes-toggle" id="ntoggle-new-car" onclick="toggleNote('new-car')">📝 Add note</button><div class="notes-body" id="nbody-new-car"><textarea class="notes-textarea" id="note-new-car" placeholder="Add a note, update, or issue..." oninput="scheduleNoteSave('new-car')"></textarea><div class="notes-save-status" id="nstatus-new-car"></div></div></div></div></div>
+      <div class="task" data-id="shuttle"><div class="task-row" onclick="toggleTask('shuttle')"><div class="check-box"></div><div class="task-text">Confirm shuttle is booked and staged for 4:00 PM departure</div></div><div class="task-meta"><div class="assign-area"><div class="assignees-display" id="assignees-shuttle"></div><div class="assign-dropdown" id="drop-shuttle"></div></div><div class="done-by-label" id="doneby-shuttle"></div><div class="notes-area"><button class="notes-toggle" id="ntoggle-shuttle" onclick="toggleNote('shuttle')">📝 Add note</button><div class="notes-body" id="nbody-shuttle"><textarea class="notes-textarea" id="note-shuttle" placeholder="Add a note, update, or issue..." oninput="scheduleNoteSave('shuttle')"></textarea><div class="notes-save-status" id="nstatus-shuttle"></div></div></div></div></div>
+    </div>
+
+    <div class="check-group">
+      <div class="cg-title">📋 Stats & Talking Points</div>
+      <div class="task" data-id="returns"><div class="task-row" onclick="toggleTask('returns')"><div class="check-box"></div><div class="task-text">Pull current weekly return numbers</div></div><div class="task-meta"><div class="assign-area"><div class="assignees-display" id="assignees-returns"></div><div class="assign-dropdown" id="drop-returns"></div></div><div class="done-by-label" id="doneby-returns"></div><div class="notes-area"><button class="notes-toggle" id="ntoggle-returns" onclick="toggleNote('returns')">📝 Add note</button><div class="notes-body" id="nbody-returns"><textarea class="notes-textarea" id="note-returns" placeholder="Add a note, update, or issue..." oninput="scheduleNoteSave('returns')"></textarea><div class="notes-save-status" id="nstatus-returns"></div></div></div></div></div>
+      <div class="task" data-id="ls-stats"><div class="task-row" onclick="toggleTask('ls-stats')"><div class="check-box"></div><div class="task-text">Prep LS (lot sweep) stats</div></div><div class="task-meta"><div class="assign-area"><div class="assignees-display" id="assignees-ls-stats"></div><div class="assign-dropdown" id="drop-ls-stats"></div></div><div class="done-by-label" id="doneby-ls-stats"></div><div class="notes-area"><button class="notes-toggle" id="ntoggle-ls-stats" onclick="toggleNote('ls-stats')">📝 Add note</button><div class="notes-body" id="nbody-ls-stats"><textarea class="notes-textarea" id="note-ls-stats" placeholder="Add a note, update, or issue..." oninput="scheduleNoteSave('ls-stats')"></textarea><div class="notes-save-status" id="nstatus-ls-stats"></div></div></div></div></div>
+      <div class="task" data-id="qc-rates"><div class="task-row" onclick="toggleTask('qc-rates')"><div class="check-box"></div><div class="task-text">Pull QC pass/fail rates</div></div><div class="task-meta"><div class="assign-area"><div class="assignees-display" id="assignees-qc-rates"></div><div class="assign-dropdown" id="drop-qc-rates"></div></div><div class="done-by-label" id="doneby-qc-rates"></div><div class="notes-area"><button class="notes-toggle" id="ntoggle-qc-rates" onclick="toggleNote('qc-rates')">📝 Add note</button><div class="notes-body" id="nbody-qc-rates"><textarea class="notes-textarea" id="note-qc-rates" placeholder="Add a note, update, or issue..." oninput="scheduleNoteSave('qc-rates')"></textarea><div class="notes-save-status" id="nstatus-qc-rates"></div></div></div></div></div>
+      <div class="task" data-id="production"><div class="task-row" onclick="toggleTask('production')"><div class="check-box"></div><div class="task-text">Compile production volume numbers</div></div><div class="task-meta"><div class="assign-area"><div class="assignees-display" id="assignees-production"></div><div class="assign-dropdown" id="drop-production"></div></div><div class="done-by-label" id="doneby-production"></div><div class="notes-area"><button class="notes-toggle" id="ntoggle-production" onclick="toggleNote('production')">📝 Add note</button><div class="notes-body" id="nbody-production"><textarea class="notes-textarea" id="note-production" placeholder="Add a note, update, or issue..." oninput="scheduleNoteSave('production')"></textarea><div class="notes-save-status" id="nstatus-production"></div></div></div></div></div>
+      <div class="task" data-id="intros"><div class="task-row" onclick="toggleTask('intros')"><div class="check-box"></div><div class="task-text">Both Chris & Candice prep their 2-min personal intros</div></div><div class="task-meta"><div class="assign-area"><div class="assignees-display" id="assignees-intros"></div><div class="assign-dropdown" id="drop-intros"></div></div><div class="done-by-label" id="doneby-intros"></div><div class="notes-area"><button class="notes-toggle" id="ntoggle-intros" onclick="toggleNote('intros')">📝 Add note</button><div class="notes-body" id="nbody-intros"><textarea class="notes-textarea" id="note-intros" placeholder="Add a note, update, or issue..." oninput="scheduleNoteSave('intros')"></textarea><div class="notes-save-status" id="nstatus-intros"></div></div></div></div></div>
+    </div>
+
+    <div class="check-group">
+      <div class="cg-title">🛠 Equipment & Supplies</div>
+      <div class="task" data-id="tablets-count"><div class="task-row" onclick="toggleTask('tablets-count')"><div class="check-box"></div><div class="task-text">Count & charge tablets — 1 per Lot Sweep director (min 10)</div></div><div class="task-meta"><div class="assign-area"><div class="assignees-display" id="assignees-tablets-count"></div><div class="assign-dropdown" id="drop-tablets-count"></div></div><div class="done-by-label" id="doneby-tablets-count"></div><div class="notes-area"><button class="notes-toggle" id="ntoggle-tablets-count" onclick="toggleNote('tablets-count')">📝 Add note</button><div class="notes-body" id="nbody-tablets-count"><textarea class="notes-textarea" id="note-tablets-count" placeholder="Add a note, update, or issue..." oninput="scheduleNoteSave('tablets-count')"></textarea><div class="notes-save-status" id="nstatus-tablets-count"></div></div></div></div></div>
+      <div class="task" data-id="tablets-test"><div class="task-row" onclick="toggleTask('tablets-test')"><div class="check-box"></div><div class="task-text">Test all tablets — confirm login and app access</div></div><div class="task-meta"><div class="assign-area"><div class="assignees-display" id="assignees-tablets-test"></div><div class="assign-dropdown" id="drop-tablets-test"></div></div><div class="done-by-label" id="doneby-tablets-test"></div><div class="notes-area"><button class="notes-toggle" id="ntoggle-tablets-test" onclick="toggleNote('tablets-test')">📝 Add note</button><div class="notes-body" id="nbody-tablets-test"><textarea class="notes-textarea" id="note-tablets-test" placeholder="Add a note, update, or issue..." oninput="scheduleNoteSave('tablets-test')"></textarea><div class="notes-save-status" id="nstatus-tablets-test"></div></div></div></div></div>
+      <div class="task" data-id="water"><div class="task-row" onclick="toggleTask('water')"><div class="check-box"></div><div class="task-text">Stage cooler with extra water bottles on the lot</div></div><div class="task-meta"><div class="assign-area"><div class="assignees-display" id="assignees-water"></div><div class="assign-dropdown" id="drop-water"></div></div><div class="done-by-label" id="doneby-water"></div><div class="notes-area"><button class="notes-toggle" id="ntoggle-water" onclick="toggleNote('water')">📝 Add note</button><div class="notes-body" id="nbody-water"><textarea class="notes-textarea" id="note-water" placeholder="Add a note, update, or issue..." oninput="scheduleNoteSave('water')"></textarea><div class="notes-save-status" id="nstatus-water"></div></div></div></div></div>
+      <div class="task" data-id="car-fuel"><div class="task-row" onclick="toggleTask('car-fuel')"><div class="check-box"></div><div class="task-text">Confirm new car is fueled and available</div></div><div class="task-meta"><div class="assign-area"><div class="assignees-display" id="assignees-car-fuel"></div><div class="assign-dropdown" id="drop-car-fuel"></div></div><div class="done-by-label" id="doneby-car-fuel"></div><div class="notes-area"><button class="notes-toggle" id="ntoggle-car-fuel" onclick="toggleNote('car-fuel')">📝 Add note</button><div class="notes-body" id="nbody-car-fuel"><textarea class="notes-textarea" id="note-car-fuel" placeholder="Add a note, update, or issue..." oninput="scheduleNoteSave('car-fuel')"></textarea><div class="notes-save-status" id="nstatus-car-fuel"></div></div></div></div></div>
+    </div>
+
+    <div class="check-group">
+      <div class="cg-title">🏭 Facility & Presentation</div>
+      <div class="task" data-id="tour-walk"><div class="task-row" onclick="toggleTask('tour-walk')"><div class="check-box"></div><div class="task-text">Walk the tour route — verify it's clean and presentable</div></div><div class="task-meta"><div class="assign-area"><div class="assignees-display" id="assignees-tour-walk"></div><div class="assign-dropdown" id="drop-tour-walk"></div></div><div class="done-by-label" id="doneby-tour-walk"></div><div class="notes-area"><button class="notes-toggle" id="ntoggle-tour-walk" onclick="toggleNote('tour-walk')">📝 Add note</button><div class="notes-body" id="nbody-tour-walk"><textarea class="notes-textarea" id="note-tour-walk" placeholder="Add a note, update, or issue..." oninput="scheduleNoteSave('tour-walk')"></textarea><div class="notes-save-status" id="nstatus-tour-walk"></div></div></div></div></div>
+      <div class="task" data-id="staff-brief"><div class="task-row" onclick="toggleTask('staff-brief')"><div class="check-box"></div><div class="task-text">Brief all floor staff on visit expectations and professionalism</div></div><div class="task-meta"><div class="assign-area"><div class="assignees-display" id="assignees-staff-brief"></div><div class="assign-dropdown" id="drop-staff-brief"></div></div><div class="done-by-label" id="doneby-staff-brief"></div><div class="notes-area"><button class="notes-toggle" id="ntoggle-staff-brief" onclick="toggleNote('staff-brief')">📝 Add note</button><div class="notes-body" id="nbody-staff-brief"><textarea class="notes-textarea" id="note-staff-brief" placeholder="Add a note, update, or issue..." oninput="scheduleNoteSave('staff-brief')"></textarea><div class="notes-save-status" id="nstatus-staff-brief"></div></div></div></div></div>
+      <div class="task" data-id="lot-org"><div class="task-row" onclick="toggleTask('lot-org')"><div class="check-box"></div><div class="task-text">Ensure lot is organized and lot sweep vehicles are accessible</div></div><div class="task-meta"><div class="assign-area"><div class="assignees-display" id="assignees-lot-org"></div><div class="assign-dropdown" id="drop-lot-org"></div></div><div class="done-by-label" id="doneby-lot-org"></div><div class="notes-area"><button class="notes-toggle" id="ntoggle-lot-org" onclick="toggleNote('lot-org')">📝 Add note</button><div class="notes-body" id="nbody-lot-org"><textarea class="notes-textarea" id="note-lot-org" placeholder="Add a note, update, or issue..." oninput="scheduleNoteSave('lot-org')"></textarea><div class="notes-save-status" id="nstatus-lot-org"></div></div></div></div></div>
+      <div class="task" data-id="recon-stage"><div class="task-row" onclick="toggleTask('recon-stage')"><div class="check-box"></div><div class="task-text">Recon area staged and ready for QC demonstration</div></div><div class="task-meta"><div class="assign-area"><div class="assignees-display" id="assignees-recon-stage"></div><div class="assign-dropdown" id="drop-recon-stage"></div></div><div class="done-by-label" id="doneby-recon-stage"></div><div class="notes-area"><button class="notes-toggle" id="ntoggle-recon-stage" onclick="toggleNote('recon-stage')">📝 Add note</button><div class="notes-body" id="nbody-recon-stage"><textarea class="notes-textarea" id="note-recon-stage" placeholder="Add a note, update, or issue..." oninput="scheduleNoteSave('recon-stage')"></textarea><div class="notes-save-status" id="nstatus-recon-stage"></div></div></div></div></div>
+      <div class="task" data-id="weather"><div class="task-row" onclick="toggleTask('weather')"><div class="check-box"></div><div class="task-text">Identify fallback plan if weather affects outdoor activities</div></div><div class="task-meta"><div class="assign-area"><div class="assignees-display" id="assignees-weather"></div><div class="assign-dropdown" id="drop-weather"></div></div><div class="done-by-label" id="doneby-weather"></div><div class="notes-area"><button class="notes-toggle" id="ntoggle-weather" onclick="toggleNote('weather')">📝 Add note</button><div class="notes-body" id="nbody-weather"><textarea class="notes-textarea" id="note-weather" placeholder="Add a note, update, or issue..." oninput="scheduleNoteSave('weather')"></textarea><div class="notes-save-status" id="nstatus-weather"></div></div></div></div></div>
+    </div>
+
+  </div>
+
+  <!-- TIPS -->
+  <div class="sec">Tips for Success</div>
+  <div class="tips-grid">
+    <div class="tip-card"><div class="tip-icon">⏱</div><div><div class="tip-title">Guard the Clock</div><div class="tip-body">2 hours of floor time goes fast with 16 directors. Designate a timekeeper and give groups a 15-min warning before regrouping.</div></div></div>
+    <div class="tip-card"><div class="tip-icon">📊</div><div><div class="tip-title">Lead with Data</div><div class="tip-body">Have your stats printed or on a device. Directors appreciate specifics — weekly return volume, QC rates, production throughput.</div></div></div>
+    <div class="tip-card"><div class="tip-icon">🚗</div><div><div class="tip-title">New Car as Flex Asset</div><div class="tip-body">If groups get uneven or a director wants to see a different area, use the new car to move people without disrupting the flow.</div></div></div>
+    <div class="tip-card"><div class="tip-icon">💧</div><div><div class="tip-title">Hospitality Details Matter</div><div class="tip-body">Water on the lot signals you thought ahead. Small things like this set a professional tone and show operational awareness.</div></div></div>
+    <div class="tip-card"><div class="tip-icon">📱</div><div><div class="tip-title">Tablet Readiness</div><div class="tip-body">Charge the night before. Confirm login credentials work. A tablet that won't log in during a director visit is a distraction you don't want.</div></div></div>
+    <div class="tip-card"><div class="tip-icon">🎯</div><div><div class="tip-title">Strong Debrief Close</div><div class="tip-body">End with confidence. A 1–2 sentence summary of what they saw and one thing you're proud of leaves a lasting impression before the shuttle.</div></div></div>
+  </div>
+
+</div>
+
+<script type="module">
+import { initializeApp }                              from "https://www.gstatic.com/firebasejs/11.1.0/firebase-app.js";
+import { getDatabase, ref, onValue, set, update }     from "https://www.gstatic.com/firebasejs/11.1.0/firebase-database.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyD1W87SodsQzKpXn5zIaugarJGNayYIHh8",
+  authDomain: "directors-visit.firebaseapp.com",
+  databaseURL: "https://directors-visit-default-rtdb.firebaseio.com",
+  projectId: "directors-visit",
+  storageBucket: "directors-visit.firebasestorage.app",
+  messagingSenderId: "145175950574",
+  appId: "1:145175950574:web:c9c8178a2926d1230b2fff"
+};
+
+const app = initializeApp(firebaseConfig);
+const db  = getDatabase(app);
+
+const COLORS = ['#c07d0a','#2563c4','#1a9455','#6b3fc4','#c42525','#0e7c7b','#a03080','#b5470f'];
+function colorFor(name){ let h=0; for(let c of (name||'')) h=(h*31+c.charCodeAt(0))%COLORS.length; return COLORS[h]; }
+
+let me = localStorage.getItem('dv_me') || '';
+let teamMembers = [];
+let taskState   = {};  // { id: { done, doneBy, doneAt, assignees:[], note } }
+const noteTimers = {};
+
+// ── SYNC STATUS ───────────────────────────────────────────
+function setSync(ok){
+  document.getElementById('sync-dot').className = 'sync-dot' + (ok ? ' live' : ' error');
+  document.getElementById('sync-label').textContent = ok ? 'Live — changes sync instantly' : 'Connection error';
+}
+
+// ── REAL-TIME LISTENERS ───────────────────────────────────
+onValue(ref(db,'dv/team'), snap => {
+  teamMembers = snap.val() || [];
+  renderTeam();
+  renderAllDropdowns();
+  renderOwnerProgress();
+  populateIdentitySelect();
+}, () => setSync(false));
+
+onValue(ref(db,'dv/tasks'), snap => {
+  taskState = snap.val() || {};
+  renderTasks();
+  renderProgress();
+  setSync(true);
+}, () => setSync(false));
+
+// ── IDENTITY ─────────────────────────────────────────────
+function populateIdentitySelect(){
+  const sel = document.getElementById('identity-select');
+  sel.innerHTML = teamMembers.map(m => `<option value="${m}"${m===me?' selected':''}>${m}</option>`).join('');
+  if(!me && teamMembers.length){ me = teamMembers[0]; localStorage.setItem('dv_me', me); }
+}
+
+window.switchUser = () => { me = document.getElementById('identity-select').value; localStorage.setItem('dv_me', me); };
+
+window.saveName = () => {
+  const val = document.getElementById('name-input').value.trim();
+  if(!val) return;
+  me = val;
+  localStorage.setItem('dv_me', me);
+  document.getElementById('modal').classList.remove('open');
+  if(!teamMembers.includes(me)){ teamMembers.push(me); set(ref(db,'dv/team'), teamMembers); }
+  else populateIdentitySelect();
+};
+document.getElementById('name-input').addEventListener('keydown', e => { if(e.key==='Enter') window.saveName(); });
+
+// ── TEAM ─────────────────────────────────────────────────
+function renderTeam(){
+  const list = document.getElementById('team-list');
+  if(!teamMembers.length){
+    list.innerHTML = '<span style="font-size:11px;color:var(--muted);font-family:DM Mono,monospace;">No team members yet — add some above</span>';
+    return;
+  }
+  list.innerHTML = teamMembers.map(m =>
+    `<div class="team-pill"><span class="swatch" style="background:${colorFor(m)}"></span>${m}<span class="remove" onclick="removeMember('${m}')">×</span></div>`
+  ).join('');
+}
+
+window.addMember = () => {
+  const input = document.getElementById('team-input');
+  const name = input.value.trim();
+  if(!name || teamMembers.includes(name)) return;
+  teamMembers.push(name);
+  input.value = '';
+  set(ref(db,'dv/team'), teamMembers);
+};
+
+window.removeMember = name => {
+  teamMembers = teamMembers.filter(m => m !== name);
+  set(ref(db,'dv/team'), teamMembers);
+  const ups = {};
+  Object.keys(taskState).forEach(id => {
+    const a = taskState[id]?.assignees || [];
+    if(a.includes(name)) ups[`dv/tasks/${id}/assignees`] = a.filter(x => x !== name);
+  });
+  if(Object.keys(ups).length) update(ref(db), ups);
+};
+
+// ── TASKS ─────────────────────────────────────────────────
+window.toggleTask = id => {
+  const cur = taskState[id] || {};
+  const nowDone = !cur.done;
+  update(ref(db), {
+    [`dv/tasks/${id}/done`]:   nowDone,
+    [`dv/tasks/${id}/doneBy`]: nowDone ? me : '',
+    [`dv/tasks/${id}/doneAt`]: nowDone ? new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'}) : ''
+  });
+};
+
+// ── MULTI-ASSIGN ──────────────────────────────────────────
+function renderAllDropdowns(){
+  document.querySelectorAll('.task').forEach(el => renderDropdown(el.dataset.id));
+}
+
+function renderDropdown(id){
+  const drop = document.getElementById('drop-'+id);
+  if(!drop) return;
+  const assigned = taskState[id]?.assignees || [];
+  if(!teamMembers.length){
+    drop.innerHTML = '<div class="assign-empty">Add team members first</div>';
+    return;
+  }
+  drop.innerHTML = teamMembers.map(m => `
+    <label class="assign-option">
+      <input type="checkbox" ${assigned.includes(m)?'checked':''} onchange="toggleAssignee('${id}','${m}',this.checked)"/>
+      <span class="assign-option-dot" style="background:${colorFor(m)}"></span>
+      <span class="assign-option-name">${m}</span>
+    </label>`
+  ).join('');
+}
+
+window.toggleAssignee = (id, name, checked) => {
+  const cur = (taskState[id]?.assignees || []).filter(Boolean);
+  const updated = checked ? [...new Set([...cur, name])] : cur.filter(x => x !== name);
+  update(ref(db), { [`dv/tasks/${id}/assignees`]: updated.length ? updated : null });
+};
+
+function renderAssigneeDisplay(id){
+  const display = document.getElementById('assignees-'+id);
+  if(!display) return;
+  const assigned = (taskState[id]?.assignees || []).filter(Boolean);
+  const hasOpen = document.getElementById('drop-'+id)?.classList.contains('open');
+  let html = assigned.map(m =>
+    `<span class="assignee-pill" style="background:${colorFor(m)}18;color:${colorFor(m)};border:1px solid ${colorFor(m)}44;">
+      <span class="swatch" style="background:${colorFor(m)}"></span>${m}
+    </span>`
+  ).join('');
+  html += `<button class="assign-btn" onclick="toggleDropdown(event,'${id}')">${assigned.length ? '+ More' : '+ Assign'}</button>`;
+  display.innerHTML = html;
+}
+
+window.toggleDropdown = (e, id) => {
+  e.stopPropagation();
+  const drop = document.getElementById('drop-'+id);
+  if(!drop) return;
+  const isOpen = drop.classList.contains('open');
+  document.querySelectorAll('.assign-dropdown.open').forEach(d => d.classList.remove('open'));
+  if(!isOpen){ renderDropdown(id); drop.classList.add('open'); }
+};
+
+document.addEventListener('click', () => {
+  document.querySelectorAll('.assign-dropdown.open').forEach(d => d.classList.remove('open'));
+});
+
+// ── NOTES ────────────────────────────────────────────────
+window.toggleNote = id => {
+  const body    = document.getElementById('nbody-'+id);
+  const toggle  = document.getElementById('ntoggle-'+id);
+  const isOpen  = body.classList.contains('open');
+  body.classList.toggle('open');
+  const note = taskState[id]?.note || '';
+  if(!isOpen){
+    toggle.textContent = '📝 Hide note';
+    const ta = document.getElementById('note-'+id);
+    if(ta && !ta.value) ta.value = note;
+  } else {
+    const hasNote = !!(taskState[id]?.note);
+    toggle.textContent = hasNote ? '📝 Edit note' : '📝 Add note';
+    toggle.className = 'notes-toggle' + (hasNote ? ' has-note' : '');
+  }
+};
+
+window.scheduleNoteSave = id => {
+  const status = document.getElementById('nstatus-'+id);
+  if(status) status.textContent = 'Typing...';
+  clearTimeout(noteTimers[id]);
+  noteTimers[id] = setTimeout(() => {
+    const val = document.getElementById('note-'+id)?.value || '';
+    update(ref(db), { [`dv/tasks/${id}/note`]: val || null });
+    if(status) { status.textContent = '✓ Saved'; setTimeout(() => { status.textContent = ''; }, 2000); }
+  }, 700);
+};
+
+// ── RENDER TASKS ─────────────────────────────────────────
+function renderTasks(){
+  document.querySelectorAll('.task').forEach(el => {
+    const id = el.dataset.id;
+    const s  = taskState[id] || {};
+
+    // done state
+    if(s.done) el.classList.add('done'); else el.classList.remove('done');
+
+    // done-by label
+    const dbl = document.getElementById('doneby-'+id);
+    if(dbl) dbl.textContent = s.done && s.doneBy ? `✓ Completed by ${s.doneBy}${s.doneAt ? ' at '+s.doneAt : ''}` : '';
+
+    // assignee display
+    renderAssigneeDisplay(id);
+
+    // note toggle label
+    const ntog = document.getElementById('ntoggle-'+id);
+    const nbod = document.getElementById('nbody-'+id);
+    if(ntog){
+      const hasNote = !!(s.note);
+      if(!nbod?.classList.contains('open')){
+        ntog.textContent = hasNote ? '📝 Edit note' : '📝 Add note';
+        ntog.className = 'notes-toggle' + (hasNote ? ' has-note' : '');
+      }
+      // sync textarea if not actively editing
+      const ta = document.getElementById('note-'+id);
+      if(ta && document.activeElement !== ta) ta.value = s.note || '';
+    }
+  });
+}
+
+// ── PROGRESS ─────────────────────────────────────────────
+function renderProgress(){
+  const ids   = Array.from(document.querySelectorAll('.task')).map(e => e.dataset.id);
+  const total = ids.length;
+  const done  = ids.filter(id => taskState[id]?.done).length;
+  const pct   = total ? Math.round(done/total*100) : 0;
+  document.getElementById('pbar').style.width = pct+'%';
+  document.getElementById('pct').textContent  = pct+'%';
+  document.getElementById('psub').textContent =
+    done===total && total>0 ? "🎉 All done — you're ready!" : `${done} of ${total} tasks complete`;
+  renderOwnerProgress();
+}
+
+function renderOwnerProgress(){
+  const ids = Array.from(document.querySelectorAll('.task')).map(e => e.dataset.id);
+  const map = {};
+  ids.forEach(id => {
+    const s = taskState[id] || {};
+    (s.assignees || []).filter(Boolean).forEach(name => {
+      if(!map[name]) map[name] = { total:0, done:0 };
+      map[name].total++;
+      if(s.done) map[name].done++;
+    });
+  });
+  const op = document.getElementById('owner-progress');
+  const entries = Object.entries(map);
+  op.innerHTML = entries.length
+    ? entries.map(([name,v]) => {
+        const c = colorFor(name);
+        return `<span class="owner-chip" style="border-color:${c}55;background:${c}11;color:${c}cc;">${name}: ${v.done}/${v.total}</span>`;
+      }).join('')
+    : '<span class="owner-chip">Assign tasks to see per-person progress</span>';
+}
+
+// ── INIT ─────────────────────────────────────────────────
+if(!me){ document.getElementById('modal').classList.add('open'); setTimeout(()=>document.getElementById('name-input').focus(),100); }
+</script>
+</body>
+</html>
