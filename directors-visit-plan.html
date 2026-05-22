@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Directors Visit — Game Plan</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap');
+
+  :root {
+    --bg: #0d0f12;
+    --surface: #15181e;
+    --border: #252830;
+    --accent: #e8b84b;
+    --accent2: #4b9de8;
+    --red: #e84b4b;
+    --green: #4be87a;
+    --text: #e4e6ec;
+    --muted: #7a7f8e;
+    --card: #1a1d24;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    min-height: 100vh;
+    padding: 24px 16px 48px;
+  }
+
+  .header {
+    text-align: center;
+    padding: 32px 0 40px;
+    position: relative;
+  }
+
+  .header::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 50%;
+    transform: translateX(-50%);
+    width: 1px;
+    height: 32px;
+    background: linear-gradient(to bottom, transparent, var(--accent));
+  }
+
+  .eyebrow {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 3px;
+    color: var(--accent);
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+
+  h1 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(52px, 12vw, 96px);
+    line-height: 0.9;
+    letter-spacing: 2px;
+    color: var(--text);
+  }
+
+  h1 span { color: var(--accent); }
+
+  .subtitle {
+    margin-top: 14px;
+    font-size: 14px;
+    color: var(--muted);
+    letter-spacing: 1px;
+  }
+
+  .section-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .section-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  /* TIMELINE */
+  .timeline-section { max-width: 760px; margin: 0 auto 48px; }
+
+  .timeline { display: flex; flex-direction: column; gap: 0; }
+
+  .tl-item {
+    display: grid;
+    grid-template-columns: 80px 24px 1fr;
+    gap: 0 16px;
+    align-items: start;
+    position: relative;
+  }
+
+  .tl-time {
+    text-align: right;
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    color: var(--accent);
+    padding-top: 16px;
+    line-height: 1.2;
+  }
+
+  .tl-line {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .tl-dot {
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    background: var(--accent);
+    margin-top: 20px;
+    flex-shrink: 0;
+    position: relative;
+    z-index: 1;
+  }
+
+  .tl-connector {
+    width: 2px;
+    flex: 1;
+    min-height: 20px;
+    background: var(--border);
+    margin-top: 2px;
+  }
+
+  .tl-item:last-child .tl-connector { display: none; }
+
+  .tl-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 14px 18px;
+    margin-bottom: 12px;
+  }
+
+  .tl-title {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 4px;
+  }
+
+  .tl-desc {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+
+  .tl-tag {
+    display: inline-block;
+    font-size: 10px;
+    font-family: 'DM Mono', monospace;
+    letter-spacing: 1px;
+    padding: 2px 8px;
+    border-radius: 4px;
+    margin-top: 8px;
+    text-transform: uppercase;
+  }
+
+  .tag-tour { background: rgba(75,157,232,.15); color: var(--accent2); border: 1px solid rgba(75,157,232,.3); }
+  .tag-qa { background: rgba(232,184,75,.12); color: var(--accent); border: 1px solid rgba(232,184,75,.3); }
+  .tag-ops { background: rgba(75,232,122,.12); color: var(--green); border: 1px solid rgba(75,232,122,.3); }
+  .tag-wrap { background: rgba(232,75,75,.12); color: var(--red); border: 1px solid rgba(232,75,75,.3); }
+
+  /* STAFFING GRID */
+  .staff-section { max-width: 760px; margin: 0 auto 48px; }
+
+  .staff-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 12px; }
+
+  .staff-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 18px 16px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .staff-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 3px; height: 100%;
+    border-radius: 3px 0 0 3px;
+  }
+
+  .staff-card.yellow::before { background: var(--accent); }
+  .staff-card.blue::before { background: var(--accent2); }
+  .staff-card.green::before { background: var(--green); }
+
+  .staff-role {
+    font-size: 11px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-family: 'DM Mono', monospace;
+    margin-bottom: 8px;
+  }
+
+  .staff-pair {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 36px;
+    line-height: 1;
+    margin-bottom: 6px;
+  }
+
+  .staff-pair .num { color: var(--accent); }
+  .staff-pair .sep { color: var(--muted); font-size: 24px; margin: 0 4px; }
+  .staff-pair .dir { color: var(--text); }
+
+  .staff-desc {
+    font-size: 12px;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+
+  /* CHECKLIST */
+  .check-section { max-width: 760px; margin: 0 auto 48px; }
+
+  .check-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+
+  @media (max-width: 520px) { .check-cols { grid-template-columns: 1fr; } }
+
+  .check-group {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 18px;
+  }
+
+  .check-group-title {
+    font-size: 12px;
+    font-family: 'DM Mono', monospace;
+    color: var(--accent2);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 14px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .check-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 8px 0;
+    border-bottom: 1px solid rgba(37,40,48,.7);
+    cursor: pointer;
+    transition: background .15s;
+    border-radius: 6px;
+    padding-left: 6px;
+    padding-right: 6px;
+  }
+
+  .check-item:last-child { border-bottom: none; }
+
+  .check-item:hover { background: rgba(255,255,255,.03); }
+
+  .check-box {
+    width: 18px; height: 18px;
+    border: 1.5px solid var(--border);
+    border-radius: 4px;
+    flex-shrink: 0;
+    margin-top: 1px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all .2s;
+    position: relative;
+  }
+
+  .check-item.done .check-box {
+    background: var(--green);
+    border-color: var(--green);
+  }
+
+  .check-item.done .check-box::after {
+    content: '✓';
+    font-size: 11px;
+    color: #0d0f12;
+    font-weight: 700;
+  }
+
+  .check-item.done .check-text {
+    text-decoration: line-through;
+    color: var(--muted);
+  }
+
+  .check-text {
+    font-size: 13px;
+    color: var(--text);
+    line-height: 1.5;
+    transition: color .2s;
+  }
+
+  /* TIPS */
+  .tips-section { max-width: 760px; margin: 0 auto 48px; }
+
+  .tips-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  @media (max-width: 520px) { .tips-grid { grid-template-columns: 1fr; } }
+
+  .tip-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 18px;
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+  }
+
+  .tip-icon {
+    font-size: 24px;
+    flex-shrink: 0;
+    line-height: 1;
+    margin-top: 2px;
+  }
+
+  .tip-title { font-size: 14px; font-weight: 600; margin-bottom: 6px; }
+  .tip-body { font-size: 12px; color: var(--muted); line-height: 1.6; }
+
+  /* PROGRESS BAR */
+  .progress-wrap { max-width: 760px; margin: 0 auto 32px; }
+  .progress-bar-bg {
+    height: 6px;
+    background: var(--border);
+    border-radius: 3px;
+    overflow: hidden;
+    margin-top: 8px;
+  }
+  .progress-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--accent), var(--green));
+    border-radius: 3px;
+    width: 0%;
+    transition: width .4s ease;
+  }
+  .progress-label {
+    display: flex;
+    justify-content: space-between;
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    margin-top: 6px;
+  }
+  #progress-pct { color: var(--accent); }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="eyebrow">Tolleson Site</div>
+  <h1>Directors<br><span>Visit</span></h1>
+  <div class="subtitle">Operational Game Plan &nbsp;·&nbsp; Next Week</div>
+</div>
+
+<!-- PROGRESS -->
+<div class="progress-wrap">
+  <div class="section-label">Prep Progress</div>
+  <div class="progress-bar-bg">
+    <div class="progress-bar-fill" id="progress-fill"></div>
+  </div>
+  <div class="progress-label">
+    <span id="progress-count">0 of 0 tasks complete</span>
+    <span id="progress-pct">0%</span>
+  </div>
+</div>
+
+<!-- TIMELINE -->
+<div class="timeline-section">
+  <div class="section-label">Day-Of Schedule</div>
+  <div class="timeline">
+
+    <div class="tl-item">
+      <div class="tl-time">1:00 PM</div>
+      <div class="tl-line"><div class="tl-dot"></div><div class="tl-connector"></div></div>
+      <div class="tl-card">
+        <div class="tl-title">Directors Arrive</div>
+        <div class="tl-desc">Greet directors at entrance. Have water/refreshments ready. Confirm headcount and assign pairing groups.</div>
+        <span class="tl-tag tag-ops">Logistics</span>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-time">1:00–1:15</div>
+      <div class="tl-line"><div class="tl-dot"></div><div class="tl-connector"></div></div>
+      <div class="tl-card">
+        <div class="tl-title">Facility Tour — Setting the Stage</div>
+        <div class="tl-desc">Walk directors through vehicle quality flow. Highlight key touchpoints, equipment, and current production state.</div>
+        <span class="tl-tag tag-tour">Tour</span>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-time">1:15–1:30</div>
+      <div class="tl-line"><div class="tl-dot"></div><div class="tl-connector"></div></div>
+      <div class="tl-card">
+        <div class="tl-title">Intro with Chris & Candice</div>
+        <div class="tl-desc">Introduce yourselves — role, time in role. Share key Tolleson stats: weekly returns, LS, QCs, and production numbers.</div>
+        <span class="tl-tag tag-qa">QA Brief</span>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-time">1:30–3:30</div>
+      <div class="tl-line"><div class="tl-dot"></div><div class="tl-connector"></div></div>
+      <div class="tl-card">
+        <div class="tl-title">Lot Sweep &amp; Return QC</div>
+        <div class="tl-desc">2 hours of active floor work. Run lot sweep groups and return QC simultaneously. Use new car to shift personnel between groups as needed.</div>
+        <span class="tl-tag tag-qa">Core Activity</span>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-time">3:30–3:40</div>
+      <div class="tl-line"><div class="tl-dot"></div><div class="tl-connector"></div></div>
+      <div class="tl-card">
+        <div class="tl-title">Wrap &amp; Debrief</div>
+        <div class="tl-desc">Gather all groups. Recap observations, wins, and any action items. Keep it tight — shuttle leaves at 4.</div>
+        <span class="tl-tag tag-wrap">Debrief</span>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-time">4:00 PM</div>
+      <div class="tl-line"><div class="tl-dot"></div><div class="tl-connector"></div></div>
+      <div class="tl-card">
+        <div class="tl-title">Shuttle Out</div>
+        <div class="tl-desc">Confirm all directors have transportation. Ensure shuttle is staged and ready by 3:55.</div>
+        <span class="tl-tag tag-ops">Logistics</span>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- STAFFING -->
+<div class="staff-section">
+  <div class="section-label">Staffing Pairings — 16 Directors Total</div>
+  <div class="staff-grid">
+
+    <div class="staff-card yellow">
+      <div class="staff-role">Return QC</div>
+      <div class="staff-pair">
+        <span class="num">2</span><span class="sep">:</span><span class="dir">4</span>
+      </div>
+      <div class="staff-desc">2 Return QC techs paired with 4 directors</div>
+    </div>
+
+    <div class="staff-card blue">
+      <div class="staff-role">Lot Sweep</div>
+      <div class="staff-pair">
+        <span class="num">5</span><span class="sep">:</span><span class="dir">10</span>
+      </div>
+      <div class="staff-desc">5 Lot Sweep techs paired with 10 directors</div>
+    </div>
+
+    <div class="staff-card green">
+      <div class="staff-role">Recon QC</div>
+      <div class="staff-pair">
+        <span class="num">1</span><span class="sep">:</span><span class="dir">2</span>
+      </div>
+      <div class="staff-desc">1 Recon QC tech paired with 2 directors</div>
+    </div>
+
+    <div class="staff-card yellow">
+      <div class="staff-role">OT Coverage</div>
+      <div class="staff-pair" style="font-size:28px; padding-top:4px; color: var(--accent);">
+        Approved
+      </div>
+      <div class="staff-desc">OT for all Return Inspection Techs — confirm schedule early</div>
+    </div>
+
+  </div>
+</div>
+
+<!-- CHECKLISTS -->
+<div class="check-section">
+  <div class="section-label">Pre-Visit Checklist</div>
+  <div class="check-cols">
+
+    <div class="check-group">
+      <div class="check-group-title">🗓 People & Scheduling</div>
+      <div class="check-item" onclick="toggle(this)">
+        <div class="check-box"></div>
+        <div class="check-text">Confirm OT for all Return Inspection Techs</div>
+      </div>
+      <div class="check-item" onclick="toggle(this)">
+        <div class="check-box"></div>
+        <div class="check-text">Notify Chris & Candice of intro segment timing (15 min)</div>
+      </div>
+      <div class="check-item" onclick="toggle(this)">
+        <div class="check-box"></div>
+        <div class="check-text">Assign staff to pairing groups (Return QC, Lot Sweep, Recon QC)</div>
+      </div>
+      <div class="check-item" onclick="toggle(this)">
+        <div class="check-box"></div>
+        <div class="check-text">Confirm director headcount (16 expected)</div>
+      </div>
+      <div class="check-item" onclick="toggle(this)">
+        <div class="check-box"></div>
+        <div class="check-text">Stage new car for personnel shifts as needed</div>
+      </div>
+      <div class="check-item" onclick="toggle(this)">
+        <div class="check-box"></div>
+        <div class="check-text">Confirm shuttle is booked and staged for 4:00 PM departure</div>
+      </div>
+    </div>
+
+    <div class="check-group">
+      <div class="check-group-title">📋 Stats & Talking Points</div>
+      <div class="check-item" onclick="toggle(this)">
+        <div class="check-box"></div>
+        <div class="check-text">Pull current weekly return numbers</div>
+      </div>
+      <div class="check-item" onclick="toggle(this)">
+        <div class="check-box"></div>
+        <div class="check-text">Prep LS (lot sweep) stats</div>
+      </div>
+      <div class="check-item" onclick="toggle(this)">
+        <div class="check-box"></div>
+        <div class="check-text">Pull QC pass/fail rates</div>
+      </div>
+      <div class="check-item" onclick="toggle(this)">
+        <div class="check-box"></div>
+        <div class="check-text">Compile production volume numbers</div>
+      </div>
+      <div class="check-item" onclick="toggle(this)">
+        <div class="check-box"></div>
+        <div class="check-text">Both Chris & Candice prep their 2-min personal intros</div>
+      </div>
+    </div>
+
+    <div class="check-group">
+      <div class="check-group-title">🛠 Equipment & Supplies</div>
+      <div class="check-item" onclick="toggle(this)">
+        <div class="check-box"></div>
+        <div class="check-text">Count & charge tablets — need 1 per director on Lot Sweep (min 10)</div>
+      </div>
+      <div class="check-item" onclick="toggle(this)">
+        <div class="check-box"></div>
+        <div class="check-text">Stage cooler with extra water bottles on the lot</div>
+      </div>
+      <div class="check-item" onclick="toggle(this)">
+        <div class="check-box"></div>
+        <div class="check-text">Test all tablets — confirm login and app access</div>
+      </div>
+      <div class="check-item" onclick="toggle(this)">
+        <div class="check-box"></div>
+        <div class="check-text">Confirm new car is fueled and available</div>
+      </div>
+    </div>
+
+    <div class="check-group">
+      <div class="check-group-title">🏭 Facility & Presentation</div>
+      <div class="check-item" onclick="toggle(this)">
+        <div class="check-box"></div>
+        <div class="check-text">Walk the tour route — verify it's clean and presentable</div>
+      </div>
+      <div class="check-item" onclick="toggle(this)">
+        <div class="check-box"></div>
+        <div class="check-text">Brief all floor staff on visit expectations and professionalism</div>
+      </div>
+      <div class="check-item" onclick="toggle(this)">
+        <div class="check-box"></div>
+        <div class="check-text">Ensure lot is organized and lot sweep vehicles are accessible</div>
+      </div>
+      <div class="check-item" onclick="toggle(this)">
+        <div class="check-box"></div>
+        <div class="check-text">Recon area staged and ready for QC demonstration</div>
+      </div>
+      <div class="check-item" onclick="toggle(this)">
+        <div class="check-box"></div>
+        <div class="check-text">Identify fallback plan if weather affects outdoor activities</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- TIPS -->
+<div class="tips-section">
+  <div class="section-label">Tips for Success</div>
+  <div class="tips-grid">
+    <div class="tip-card">
+      <div class="tip-icon">⏱</div>
+      <div>
+        <div class="tip-title">Guard the Clock</div>
+        <div class="tip-body">2 hours of floor time goes fast with 16 directors. Designate a timekeeper and give groups a 15-min warning before regrouping.</div>
+      </div>
+    </div>
+    <div class="tip-card">
+      <div class="tip-icon">📊</div>
+      <div>
+        <div class="tip-title">Lead with Data</div>
+        <div class="tip-body">Have your stats printed or on a device. Directors appreciate specifics — weekly return volume, QC rates, production throughput.</div>
+      </div>
+    </div>
+    <div class="tip-card">
+      <div class="tip-icon">🚗</div>
+      <div>
+        <div class="tip-title">New Car as Flex Asset</div>
+        <div class="tip-body">If groups get uneven or a director wants to see a different area, use the new car to move people quickly without disrupting the flow.</div>
+      </div>
+    </div>
+    <div class="tip-card">
+      <div class="tip-icon">💧</div>
+      <div>
+        <div class="tip-title">Hospitality Details Matter</div>
+        <div class="tip-body">Water on the lot signals you thought ahead. Small things like this set a professional tone and show operational awareness.</div>
+      </div>
+    </div>
+    <div class="tip-card">
+      <div class="tip-icon">📱</div>
+      <div>
+        <div class="tip-title">Tablet Readiness</div>
+        <div class="tip-body">Charge the night before. Confirm login credentials work. A tablet that won't log in during a director visit is a distraction you don't want.</div>
+      </div>
+    </div>
+    <div class="tip-card">
+      <div class="tip-icon">🎯</div>
+      <div>
+        <div class="tip-title">Strong Debrief Close</div>
+        <div class="tip-body">End with confidence. A 1–2 sentence summary of what they saw and one thing you're proud of leaves a lasting impression before the shuttle.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  function toggle(el) {
+    el.classList.toggle('done');
+    updateProgress();
+  }
+
+  function updateProgress() {
+    const all = document.querySelectorAll('.check-item');
+    const done = document.querySelectorAll('.check-item.done');
+    const pct = Math.round((done.length / all.length) * 100);
+    document.getElementById('progress-fill').style.width = pct + '%';
+    document.getElementById('progress-count').textContent = `${done.length} of ${all.length} tasks complete`;
+    document.getElementById('progress-pct').textContent = pct + '%';
+  }
+
+  updateProgress();
+</script>
+</body>
+</html>
