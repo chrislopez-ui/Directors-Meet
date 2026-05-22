@@ -82,6 +82,50 @@ h1 span{color:var(--amber);}
 .staff-pair .d{color:var(--text);}
 .staff-desc-s{font-size:12px;color:var(--muted);line-height:1.5;}
 
+/* TALKING TILES */
+.talk-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:40px;}
+@media(max-width:640px){.talk-grid{grid-template-columns:1fr;}}
+.talk-tile{background:var(--white);border:1px solid var(--border);border-radius:14px;box-shadow:var(--shadow-sm);overflow:hidden;}
+.talk-tile.chris{border-top:3px solid var(--amber);}
+.talk-tile.candice{border-top:3px solid var(--blue);}
+
+.talk-header{display:flex;align-items:center;gap:12px;padding:16px 18px;cursor:pointer;user-select:none;}
+.talk-avatar{width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'DM Mono',monospace;font-size:12px;font-weight:600;flex-shrink:0;}
+.talk-name{font-size:15px;font-weight:700;color:var(--text);}
+.talk-role{font-size:10px;font-family:'DM Mono',monospace;color:var(--muted);letter-spacing:.5px;margin-top:1px;}
+.talk-expand{margin-left:auto;font-size:18px;color:var(--muted);transition:transform .25s;flex-shrink:0;}
+.talk-tile.open .talk-expand{transform:rotate(180deg);}
+
+.talk-hero{padding:0 18px 16px;display:flex;gap:14px;align-items:flex-start;}
+.talk-stat-big{background:var(--amber-bg);border:1px solid var(--amber-border);border-radius:10px;padding:14px 16px;min-width:120px;flex-shrink:0;text-align:center;}
+.tsb-num{font-family:'Bebas Neue',sans-serif;font-size:42px;line-height:1;color:var(--amber);}
+.tsb-label{font-size:11px;font-family:'DM Mono',monospace;color:var(--muted);line-height:1.5;margin-top:4px;}
+
+.talk-mini-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px;flex:1;}
+.tmi{background:var(--bg);border:1px solid var(--border);border-radius:7px;padding:7px 8px;}
+.tmi-n{display:block;font-family:'Bebas Neue',sans-serif;font-size:20px;color:var(--amber);line-height:1;}
+.tmi-l{font-size:9px;font-family:'DM Mono',monospace;color:var(--muted);letter-spacing:.5px;text-transform:uppercase;line-height:1.3;}
+
+/* talk body — hidden by default, shown when .open */
+.talk-body{display:none;padding:0 18px 18px;border-top:1px solid var(--border);margin-top:0;padding-top:16px;}
+.talk-tile.open .talk-body{display:block;}
+
+.talk-section-label{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--blue);margin-bottom:8px;margin-top:14px;}
+.talk-section-label:first-child{margin-top:0;}
+.talk-points{list-style:none;padding:0;margin:0 0 4px;}
+.talk-points li{font-size:12.5px;color:#3a3530;line-height:1.6;padding:5px 0 5px 16px;border-bottom:1px solid var(--border);position:relative;}
+.talk-points li:last-child{border-bottom:none;}
+.talk-points li::before{content:'→';position:absolute;left:0;color:var(--amber);font-size:11px;top:6px;}
+
+.talk-trend{background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:12px 14px;margin-top:4px;}
+.trend-bar-wrap{display:flex;flex-direction:column;gap:5px;}
+.trend-week{display:flex;align-items:center;gap:8px;}
+.tw-label{font-size:10px;font-family:'DM Mono',monospace;color:var(--muted);width:38px;flex-shrink:0;}
+.tw-bar{background:var(--amber-bg);border:1px solid var(--amber-border);border-radius:4px;height:22px;display:flex;align-items:center;padding:0 8px;font-size:11px;font-family:'DM Mono',monospace;color:var(--amber);font-weight:600;transition:width .4s ease;min-width:40px;}
+.tw-bar.peak{background:var(--amber);color:#fff;border-color:var(--amber);}
+
+.talk-callout{margin-top:14px;background:var(--amber-bg);border-left:3px solid var(--amber);border-radius:0 8px 8px 0;padding:10px 12px;font-size:12px;color:#3a3530;line-height:1.6;}
+
 /* CHECKLIST */
 .check-cols{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:40px;}
 @media(max-width:560px){.check-cols{grid-template-columns:1fr;}}
@@ -133,6 +177,27 @@ h1 span{color:var(--amber);}
 .notes-textarea:focus{outline:none;border-color:var(--amber);}
 .notes-textarea::placeholder{color:var(--muted);}
 .notes-save-status{font-size:10px;font-family:'DM Mono',monospace;color:var(--muted);margin-top:3px;}
+
+/* WEEKLY TABLE */
+.wk-table{width:100%;border-collapse:collapse;font-size:12px;margin-top:4px;}
+.wk-table th{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);padding:5px 8px;text-align:left;border-bottom:1px solid var(--border);}
+.wk-table td{padding:5px 8px;border-bottom:1px solid var(--bg);color:var(--text);font-weight:500;}
+.wk-table tr:last-child td{border-bottom:none;}
+.wk-table tr:hover td{background:var(--bg);}
+.wk-total{font-weight:700;color:var(--text);}
+.wk-peak td{background:var(--amber-bg)!important;}
+.wk-peak .wk-total{color:var(--amber);}
+.wk-avg{border-top:1px dashed var(--border)!important;}
+.wk-avg td{color:var(--muted);font-style:italic;}
+.wk-avg .wk-total{color:var(--blue);font-style:normal;font-weight:700;}
+
+/* AREA TABS */
+.area-tabs{display:flex;gap:6px;margin-top:14px;flex-wrap:wrap;}
+.area-tab{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:1px;padding:5px 10px;border:1px solid var(--border);border-radius:6px;background:var(--bg);color:var(--muted);cursor:pointer;transition:all .15s;text-transform:uppercase;}
+.area-tab:hover{border-color:var(--blue);color:var(--blue);}
+.area-tab.active{background:var(--blue-bg);border-color:var(--blue-border);color:var(--blue);font-weight:600;}
+.area-panel{display:none;}
+.area-panel.active{display:block;}
 
 /* TIPS */
 .tips-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:40px;}
@@ -220,6 +285,223 @@ h1 span{color:var(--amber);}
     <div class="pbar-bg"><div class="pbar-fill" id="pbar"></div></div>
     <div class="progress-sub" id="psub">0 of 0 tasks complete</div>
     <div class="owner-progress" id="owner-progress"></div>
+  </div>
+
+  <!-- TALKING TILES -->
+  <div class="sec">Talking Points</div>
+  <div class="talk-grid">
+
+    <!-- CHRIS LOPEZ -->
+    <div class="talk-tile chris">
+      <div class="talk-header" onclick="this.closest('.talk-tile').classList.toggle('open')">
+        <div class="talk-avatar" style="background:#c07d0a22;color:#c07d0a;">CL</div>
+        <div>
+          <div class="talk-name">Chris Lopez</div>
+          <div class="talk-role">Weekly Full Return Numbers</div>
+        </div>
+        <div class="talk-expand">▾</div>
+      </div>
+
+      <div class="talk-hero">
+        <div class="talk-stat-big">
+          <div class="tsb-num">62</div>
+          <div class="tsb-label">Returns — Last Full Week<br><span style="font-size:10px;opacity:.7;">Week of May 11</span></div>
+        </div>
+        <div class="talk-mini-grid">
+          <div class="tmi"><span class="tmi-n">67</span><span class="tmi-l">4-Wk Avg / Week</span></div>
+          <div class="tmi"><span class="tmi-n">104</span><span class="tmi-l">Peak (Apr 20)</span></div>
+          <div class="tmi"><span class="tmi-n">46</span><span class="tmi-l">Avg Exchanges/Wk</span></div>
+          <div class="tmi"><span class="tmi-n">22</span><span class="tmi-l">Avg Returns/Wk</span></div>
+          <div class="tmi"><span class="tmi-n">68%</span><span class="tmi-l">Exchange Mix</span></div>
+          <div class="tmi"><span class="tmi-n">32%</span><span class="tmi-l">Return Mix</span></div>
+        </div>
+      </div>
+
+      <div class="talk-body">
+
+        <!-- WEEKLY TABLE -->
+        <div class="talk-section-label">📊 Week-to-Week Breakdown</div>
+        <table class="wk-table">
+          <thead><tr><th>Week</th><th>Exchange</th><th>Return</th><th>Total</th></tr></thead>
+          <tbody>
+            <tr><td>Apr 13</td><td>37</td><td>34</td><td class="wk-total">71</td></tr>
+            <tr class="wk-peak"><td>Apr 20 ▲</td><td>72</td><td>32</td><td class="wk-total">104</td></tr>
+            <tr><td>Apr 27</td><td>30</td><td>17</td><td class="wk-total">47</td></tr>
+            <tr><td>May 4</td><td>40</td><td>16</td><td class="wk-total">56</td></tr>
+            <tr><td>May 11</td><td>41</td><td>21</td><td class="wk-total">62</td></tr>
+            <tr class="wk-avg"><td>4-Wk Avg</td><td>46</td><td>22</td><td class="wk-total">67</td></tr>
+          </tbody>
+        </table>
+
+        <div class="talk-section-label" style="margin-top:14px;">📋 Talking Points</div>
+        <ul class="talk-points">
+          <li>We averaged <strong>67 returns/week</strong> over the last 4 full weeks. Volume peaked at <strong>104 the week of Apr 20</strong> and has normalized back to the low 60s</li>
+          <li>The mix runs consistently <strong>~68% Exchanges, ~32% straight Returns</strong>. Exchanges move faster through QC — they just need re-certification, not a full inspection from scratch</li>
+          <li>On average we're processing <strong>46 exchanges</strong> and <strong>22 returns</strong> per week — that's the throughput our team manages week in, week out</li>
+          <li>The Apr 20 spike to 104 was <strong>2.2× our April 27 volume</strong> — the team absorbed that surge and cleared through it without a breakdown in process</li>
+        </ul>
+
+        <div class="talk-section-label">📈 Total Returns — 5 Week Volume</div>
+        <div class="talk-trend">
+          <div class="trend-bar-wrap">
+            <div class="trend-week"><span class="tw-label">Apr 13</span><div class="tw-bar" style="width:68%"><span>71</span></div></div>
+            <div class="trend-week"><span class="tw-label">Apr 20</span><div class="tw-bar peak" style="width:100%"><span>104 ▲ Peak</span></div></div>
+            <div class="trend-week"><span class="tw-label">Apr 27</span><div class="tw-bar" style="width:45%"><span>47</span></div></div>
+            <div class="trend-week"><span class="tw-label">May 4</span><div class="tw-bar" style="width:54%"><span>56</span></div></div>
+            <div class="trend-week"><span class="tw-label">May 11</span><div class="tw-bar" style="width:60%"><span>62</span></div></div>
+          </div>
+        </div>
+
+        <div class="talk-callout">
+          💬 <strong>Opening line:</strong> "Over the last month we've averaged 67 returns a week — ranging from 47 to 104 — and our team handles that variability without missing a beat."
+        </div>
+      </div>
+    </div>
+
+    <!-- CANDICE -->
+    <div class="talk-tile candice">
+      <div class="talk-header" onclick="this.closest('.talk-tile').classList.toggle('open')">
+        <div class="talk-avatar" style="background:#2563c422;color:#2563c4;">CA</div>
+        <div>
+          <div class="talk-name">Candice</div>
+          <div class="talk-role">Lot Sweep · OEM New Cars · Recon QC</div>
+        </div>
+        <div class="talk-expand">▾</div>
+      </div>
+
+      <div class="talk-hero">
+        <div class="talk-stat-big" style="background:#eef4ff;border-color:#2563c433;">
+          <div class="tsb-num" style="color:#2563c4;">~3,100</div>
+          <div class="tsb-label">Total Inspections/Wk<br><span style="font-size:10px;opacity:.7;">Lot Sweep + OEM + Recon</span></div>
+        </div>
+        <div class="talk-mini-grid">
+          <div class="tmi"><span class="tmi-n" style="color:#2563c4;">93.6%</span><span class="tmi-l">LS Pass Rate</span></div>
+          <div class="tmi"><span class="tmi-n" style="color:#1a9455;">96.7%</span><span class="tmi-l">OEM Pass Rate↑</span></div>
+          <div class="tmi"><span class="tmi-n" style="color:#1a9455;">461</span><span class="tmi-l">Recon QC/Wk</span></div>
+          <div class="tmi"><span class="tmi-n" style="color:#1a9455;">44.8%</span><span class="tmi-l">1st Pass Yield↑</span></div>
+          <div class="tmi"><span class="tmi-n" style="color:#c07d0a;">~2,056</span><span class="tmi-l">LS Units/Wk</span></div>
+          <div class="tmi"><span class="tmi-n" style="color:#c07d0a;">~538</span><span class="tmi-l">OEM Units/Wk</span></div>
+        </div>
+      </div>
+
+      <div class="talk-body">
+
+        <!-- TABS -->
+        <div class="area-tabs">
+          <button class="area-tab active" onclick="switchTab(this,'ls')">🔍 Lot Sweep</button>
+          <button class="area-tab" onclick="switchTab(this,'oem')">🏭 OEM New Cars</button>
+          <button class="area-tab" onclick="switchTab(this,'recon')">🔧 Recon QC</button>
+        </div>
+
+        <!-- LOT SWEEP PANEL -->
+        <div class="area-panel active" id="panel-ls">
+          <div class="talk-section-label" style="margin-top:12px;">📊 Weekly Volume & Pass Rate</div>
+          <table class="wk-table">
+            <thead><tr><th>Week</th><th>Inspections</th><th>Fails</th><th>Pass %</th></tr></thead>
+            <tbody>
+              <tr><td>Apr 20</td><td>2,508</td><td>173</td><td class="wk-total">93.1%</td></tr>
+              <tr><td>Apr 27</td><td>1,820</td><td>104</td><td class="wk-total">94.3%</td></tr>
+              <tr><td>May 4</td><td>2,799</td><td>184</td><td class="wk-total">93.4%</td></tr>
+              <tr><td>May 11</td><td>2,096</td><td>165</td><td class="wk-total">92.1%</td></tr>
+              <tr class="wk-avg"><td>4-Wk Avg</td><td>2,306</td><td>157</td><td class="wk-total">93.3%</td></tr>
+            </tbody>
+          </table>
+          <div class="talk-section-label" style="margin-top:12px;">📋 Talking Points</div>
+          <ul class="talk-points">
+            <li>Averaging <strong>~2,300 Lot Sweep inspections/week</strong> on used inventory. Pass rate has been rock-solid at <strong>92–94%</strong> for 4 straight weeks</li>
+            <li><strong>Top recurring fails:</strong> DTC codes (42–47/wk most weeks), Dash Warning Lights (13–57/wk), Dead 12V Batteries (6–13/wk). These three drive the majority of our fail volume</li>
+            <li>Wiper failures spiked to <strong>62 in the week of May 4</strong> — worth watching to see if that's a one-time batch or a trend</li>
+            <li>Sell-to-Carvana vehicles generate the most Lot Sweep fails. An opportunity to work upstream on intake quality</li>
+          </ul>
+          <div class="talk-section-label">📈 Trending Fails by Type</div>
+          <div class="talk-trend">
+            <div style="font-size:10px;font-family:'DM Mono',monospace;color:var(--muted);margin-bottom:6px;text-transform:uppercase;letter-spacing:1px;">Wiper Failures</div>
+            <div class="trend-bar-wrap">
+              <div class="trend-week"><span class="tw-label">Apr 20</span><div class="tw-bar" style="width:21%"><span>13</span></div></div>
+              <div class="trend-week"><span class="tw-label">Apr 27</span><div class="tw-bar" style="width:0%;min-width:28px"><span>0</span></div></div>
+              <div class="trend-week"><span class="tw-label">May 4</span><div class="tw-bar peak" style="width:100%"><span>62 ▲ Spike</span></div></div>
+              <div class="trend-week"><span class="tw-label">May 11</span><div class="tw-bar" style="width:2%"><span>1</span></div></div>
+            </div>
+            <div style="font-size:10px;font-family:'DM Mono',monospace;color:var(--muted);margin:10px 0 6px;text-transform:uppercase;letter-spacing:1px;">Dash Warning Lights</div>
+            <div class="trend-bar-wrap">
+              <div class="trend-week"><span class="tw-label">Apr 20</span><div class="tw-bar" style="width:86%"><span>49</span></div></div>
+              <div class="trend-week"><span class="tw-label">Apr 27</span><div class="tw-bar" style="width:23%"><span>13</span></div></div>
+              <div class="trend-week"><span class="tw-label">May 4</span><div class="tw-bar" style="width:47%"><span>27</span></div></div>
+              <div class="trend-week"><span class="tw-label">May 11</span><div class="tw-bar peak" style="width:100%"><span>57 ▲</span></div></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- OEM PANEL -->
+        <div class="area-panel" id="panel-oem">
+          <div class="talk-section-label" style="margin-top:12px;">📊 Weekly Volume & Pass Rate</div>
+          <table class="wk-table">
+            <thead><tr><th>Week</th><th>Inspections</th><th>Fails</th><th>Pass %</th></tr></thead>
+            <tbody>
+              <tr><td>Apr 20</td><td>648</td><td>49</td><td class="wk-total">92.4%</td></tr>
+              <tr><td>Apr 27</td><td>896</td><td>46</td><td class="wk-total">94.9%</td></tr>
+              <tr><td>May 4</td><td>291</td><td>8</td><td class="wk-total">97.3%</td></tr>
+              <tr><td>May 11</td><td>631</td><td>16</td><td class="wk-total">97.5%</td></tr>
+              <tr class="wk-avg"><td>4-Wk Avg</td><td>617</td><td>30</td><td class="wk-total" style="color:#1a9455;">95.5%↑</td></tr>
+            </tbody>
+          </table>
+          <div class="talk-section-label" style="margin-top:12px;">📋 Talking Points</div>
+          <ul class="talk-points">
+            <li>Averaging <strong>~617 OEM / new car Lot Sweeps per week</strong>. Pass rate has <strong>improved from 92.4% to 97.5%</strong> over 4 weeks — a strong upward trend</li>
+            <li>Even brand-new vehicles come in with issues: <strong>Dash Warning Lights (51 total catches)</strong>, <strong>Dead 12V Batteries (33)</strong>, and <strong>DTCs (26)</strong> are the top three</li>
+            <li>The fact that we're catching factory-level issues before they reach a customer is a key quality story — these vehicles wouldn't pass a customer delivery if we didn't sweep them</li>
+            <li>May 4 was a lower-volume OEM week (291 inspections) but achieved the highest pass rate — suggests the vehicles that week were higher quality off the lot</li>
+          </ul>
+          <div class="talk-section-label">📈 OEM Pass Rate Trend</div>
+          <div class="talk-trend">
+            <div class="trend-bar-wrap">
+              <div class="trend-week"><span class="tw-label">Apr 20</span><div class="tw-bar" style="width:60%;background:#2563c433;"><span style="color:#2563c4;">92.4%</span></div></div>
+              <div class="trend-week"><span class="tw-label">Apr 27</span><div class="tw-bar" style="width:72%;background:#2563c433;"><span style="color:#2563c4;">94.9%</span></div></div>
+              <div class="trend-week"><span class="tw-label">May 4</span><div class="tw-bar" style="width:90%;background:#1a945522;"><span style="color:#1a9455;">97.3%</span></div></div>
+              <div class="trend-week"><span class="tw-label">May 11</span><div class="tw-bar" style="width:100%;background:#1a945522;"><span style="color:#1a9455;">97.5% ▲</span></div></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- RECON QC PANEL -->
+        <div class="area-panel" id="panel-recon">
+          <div class="talk-section-label" style="margin-top:12px;">📊 Weekly Volume & First-Pass Yield</div>
+          <table class="wk-table">
+            <thead><tr><th>Week</th><th>Vehicles</th><th>1st Pass Yield</th><th>Change</th></tr></thead>
+            <tbody>
+              <tr><td>Apr 20</td><td>471</td><td class="wk-total">34.9%</td><td>—</td></tr>
+              <tr><td>Apr 27</td><td>421</td><td class="wk-total">37.5%</td><td style="color:#1a9455;">+2.6pp</td></tr>
+              <tr><td>May 4</td><td>469</td><td class="wk-total">43.0%</td><td style="color:#1a9455;">+5.5pp</td></tr>
+              <tr><td>May 11</td><td>466</td><td class="wk-total">40.9%</td><td style="color:#c07d0a;">−2.1pp</td></tr>
+              <tr><td>May 18</td><td>478</td><td class="wk-total" style="color:#1a9455;">44.8%</td><td style="color:#1a9455;">+3.9pp</td></tr>
+              <tr class="wk-avg"><td>5-Wk Avg</td><td>461</td><td class="wk-total">40.2%</td><td style="color:#1a9455;">+9.9pp total</td></tr>
+            </tbody>
+          </table>
+          <div class="talk-section-label" style="margin-top:12px;">📋 Talking Points</div>
+          <ul class="talk-points">
+            <li>We're processing <strong>~461 vehicles/week through Recon QC</strong> — a steady, consistent volume week over week</li>
+            <li><strong>First-Pass Yield</strong> measures how many vehicles clear Recon QC on the first attempt without needing rework. We've gone from <strong>34.9% to 44.8%</strong> — nearly 10 percentage points of improvement in 5 weeks</li>
+            <li>The May 11 dip to 40.9% was quickly recovered — May 18 bounced back to a new 5-week high of <strong>44.8%</strong></li>
+            <li>More vehicles passing on the first try means <strong>fewer rework loops, shorter cycle times, and faster throughput</strong> to the lot</li>
+          </ul>
+          <div class="talk-section-label">📈 First-Pass Yield — 5 Week Trend</div>
+          <div class="talk-trend">
+            <div class="trend-bar-wrap">
+              <div class="trend-week"><span class="tw-label">Apr 20</span><div class="tw-bar" style="width:70%;background:#2563c433;"><span style="color:#2563c4;">34.9%</span></div></div>
+              <div class="trend-week"><span class="tw-label">Apr 27</span><div class="tw-bar" style="width:76%;background:#2563c433;"><span style="color:#2563c4;">37.5%</span></div></div>
+              <div class="trend-week"><span class="tw-label">May 4</span><div class="tw-bar" style="width:89%;background:#1a945522;"><span style="color:#1a9455;">43.0%</span></div></div>
+              <div class="trend-week"><span class="tw-label">May 11</span><div class="tw-bar" style="width:84%;background:#2563c433;"><span style="color:#2563c4;">40.9%</span></div></div>
+              <div class="trend-week"><span class="tw-label">May 18</span><div class="tw-bar" style="width:100%;background:#1a945522;"><span style="color:#1a9455;">44.8% ▲ Best</span></div></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="talk-callout" style="border-color:#2563c444;background:#eef4ff;margin-top:14px;">
+          💬 <strong>Opening line:</strong> "Between Lot Sweep, OEM new cars, and Recon QC we're running over 3,100 inspections a week. Our OEM pass rate has improved 5 points in a month and our Recon first-pass yield just hit a 5-week high."
+        </div>
+      </div>
+    </div>
+
   </div>
 
   <!-- TIMELINE -->
@@ -556,6 +838,17 @@ function renderOwnerProgress(){
       }).join('')
     : '<span class="owner-chip">Assign tasks to see per-person progress</span>';
 }
+
+// ── INIT ─────────────────────────────────────────────────
+// ── TABS (Candice tile) ──────────────────────────────────
+window.switchTab = function(btn, panel) {
+  const tile = btn.closest('.talk-tile');
+  tile.querySelectorAll('.area-tab').forEach(t => t.classList.remove('active'));
+  tile.querySelectorAll('.area-panel').forEach(p => p.classList.remove('active'));
+  btn.classList.add('active');
+  const el = document.getElementById('panel-' + panel);
+  if(el) el.classList.add('active');
+};
 
 // ── INIT ─────────────────────────────────────────────────
 if(!me){ document.getElementById('modal').classList.add('open'); setTimeout(()=>document.getElementById('name-input').focus(),100); }
