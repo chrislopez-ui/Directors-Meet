@@ -5,658 +5,500 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Directors Visit — Game Plan</title>
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap');
+:root{
+  --bg:#f7f5f0;--white:#ffffff;--border:#e4dfd4;--surface:#fdfcf9;
+  --amber:#c07d0a;--amber-bg:#fef9ee;--amber-border:#f0d690;
+  --blue:#2563c4;--blue-bg:#eef4ff;--blue-border:#bcd0f5;
+  --green:#1a9455;--green-bg:#edfaf3;--green-border:#9de8c0;
+  --red:#c42525;--red-bg:#fff0f0;--red-border:#f5b8b8;
+  --text:#1c1914;--muted:#7a7469;
+  --shadow:0 2px 12px rgba(0,0,0,.07);--shadow-sm:0 1px 4px rgba(0,0,0,.06);
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;min-height:100vh;padding:0 0 60px;}
 
-  :root {
-    --bg: #0d0f12;
-    --surface: #15181e;
-    --border: #252830;
-    --accent: #e8b84b;
-    --accent2: #4b9de8;
-    --red: #e84b4b;
-    --green: #4be87a;
-    --text: #e4e6ec;
-    --muted: #7a7f8e;
-    --card: #1a1d24;
-  }
+/* SETUP BANNER */
+#setup-banner{background:#1c1914;color:#fff;padding:12px 20px;display:flex;align-items:center;gap:12px;font-family:'DM Mono',monospace;font-size:11px;letter-spacing:1px;}
+#setup-banner a{color:var(--amber);text-decoration:none;}
+#setup-banner a:hover{text-decoration:underline;}
+.setup-dot{width:8px;height:8px;border-radius:50%;background:var(--red);flex-shrink:0;animation:pulse 1.5s infinite;}
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:.4;}}
+#setup-banner.hidden{display:none;}
 
-  * { box-sizing: border-box; margin: 0; padding: 0; }
+/* HEADER */
+.header{background:var(--white);border-bottom:1px solid var(--border);padding:32px 24px 28px;text-align:center;}
+.eyebrow{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:3px;color:var(--amber);text-transform:uppercase;margin-bottom:10px;}
+h1{font-family:'Bebas Neue',sans-serif;font-size:clamp(56px,12vw,96px);line-height:.9;letter-spacing:2px;color:var(--text);}
+h1 span{color:var(--amber);}
+.subtitle{margin-top:12px;font-size:13px;color:var(--muted);letter-spacing:1px;font-family:'DM Mono',monospace;}
 
-  body {
-    background: var(--bg);
-    color: var(--text);
-    font-family: 'DM Sans', sans-serif;
-    min-height: 100vh;
-    padding: 24px 16px 48px;
-  }
+/* IDENTITY BAR */
+.identity-bar{background:var(--amber-bg);border-bottom:1px solid var(--amber-border);padding:10px 24px;display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap;}
+.identity-label{font-size:11px;font-family:'DM Mono',monospace;color:var(--amber);letter-spacing:1px;text-transform:uppercase;}
+.identity-select{font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;padding:5px 10px;border:1.5px solid var(--amber-border);border-radius:6px;background:var(--white);color:var(--text);cursor:pointer;}
+.sync-label{font-size:11px;font-family:'DM Mono',monospace;color:var(--muted);display:flex;align-items:center;gap:5px;margin-left:auto;}
+.sync-dot{width:7px;height:7px;border-radius:50%;background:#ccc;flex-shrink:0;transition:background .3s;}
+.sync-dot.live{background:var(--green);}
+.sync-dot.error{background:var(--red);}
 
-  .header {
-    text-align: center;
-    padding: 32px 0 40px;
-    position: relative;
-  }
+/* MAIN */
+.main{max-width:780px;margin:0 auto;padding:32px 16px 0;}
+.sec{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:3px;color:var(--amber);text-transform:uppercase;margin-bottom:16px;display:flex;align-items:center;gap:10px;}
+.sec::after{content:'';flex:1;height:1px;background:var(--border);}
 
-  .header::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 50%;
-    transform: translateX(-50%);
-    width: 1px;
-    height: 32px;
-    background: linear-gradient(to bottom, transparent, var(--accent));
-  }
+/* PROGRESS */
+.progress-card{background:var(--white);border:1px solid var(--border);border-radius:12px;padding:20px 24px;margin-bottom:36px;box-shadow:var(--shadow-sm);}
+.progress-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;}
+.progress-title{font-size:10px;font-weight:600;color:var(--muted);font-family:'DM Mono',monospace;letter-spacing:2px;text-transform:uppercase;}
+.progress-pct{font-family:'Bebas Neue',sans-serif;font-size:28px;color:var(--amber);}
+.pbar-bg{height:8px;background:var(--bg);border-radius:99px;overflow:hidden;border:1px solid var(--border);}
+.pbar-fill{height:100%;background:linear-gradient(90deg,var(--amber),#e8a820);border-radius:99px;width:0%;transition:width .5s ease;}
+.progress-sub{font-size:12px;color:var(--muted);margin-top:8px;font-family:'DM Mono',monospace;}
+.owner-progress{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px;padding-top:12px;border-top:1px solid var(--border);}
+.owner-chip{font-size:11px;font-family:'DM Mono',monospace;padding:4px 10px;border-radius:99px;border:1px solid var(--border);background:var(--surface);color:var(--muted);}
 
-  .eyebrow {
-    font-family: 'DM Mono', monospace;
-    font-size: 11px;
-    letter-spacing: 3px;
-    color: var(--accent);
-    text-transform: uppercase;
-    margin-bottom: 12px;
-  }
+/* TIMELINE */
+.timeline{display:flex;flex-direction:column;gap:0;margin-bottom:40px;}
+.tl-item{display:grid;grid-template-columns:80px 24px 1fr;gap:0 16px;align-items:start;}
+.tl-time{text-align:right;font-family:'DM Mono',monospace;font-size:11px;color:var(--amber);padding-top:18px;line-height:1.3;}
+.tl-line{display:flex;flex-direction:column;align-items:center;}
+.tl-dot{width:10px;height:10px;border-radius:50%;background:var(--amber);margin-top:22px;flex-shrink:0;border:2px solid var(--white);outline:2px solid var(--amber);position:relative;z-index:1;}
+.tl-connector{width:1.5px;flex:1;min-height:16px;background:var(--border);margin-top:3px;}
+.tl-item:last-child .tl-connector{display:none;}
+.tl-card{background:var(--white);border:1px solid var(--border);border-radius:10px;padding:14px 18px;margin-bottom:12px;box-shadow:var(--shadow-sm);}
+.tl-card:hover{border-color:var(--amber-border);}
+.tl-title{font-size:15px;font-weight:600;color:var(--text);margin-bottom:4px;}
+.tl-desc{font-size:13px;color:var(--muted);line-height:1.6;}
+.tl-tag{display:inline-block;font-size:10px;font-family:'DM Mono',monospace;letter-spacing:1px;padding:2px 8px;border-radius:4px;margin-top:8px;text-transform:uppercase;}
+.tag-tour{background:var(--blue-bg);color:var(--blue);border:1px solid var(--blue-border);}
+.tag-qa{background:var(--amber-bg);color:var(--amber);border:1px solid var(--amber-border);}
+.tag-ops{background:var(--green-bg);color:var(--green);border:1px solid var(--green-border);}
+.tag-wrap{background:var(--red-bg);color:var(--red);border:1px solid var(--red-border);}
 
-  h1 {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: clamp(52px, 12vw, 96px);
-    line-height: 0.9;
-    letter-spacing: 2px;
-    color: var(--text);
-  }
+/* STAFFING */
+.staff-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(155px,1fr));gap:12px;margin-bottom:40px;}
+.staff-card{background:var(--white);border:1px solid var(--border);border-radius:10px;padding:18px 16px;box-shadow:var(--shadow-sm);position:relative;overflow:hidden;}
+.staff-card::before{content:'';position:absolute;top:0;left:0;width:3px;height:100%;}
+.staff-card.y::before{background:var(--amber);}
+.staff-card.b::before{background:var(--blue);}
+.staff-card.g::before{background:var(--green);}
+.staff-role{font-size:10px;font-family:'DM Mono',monospace;color:var(--muted);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:8px;}
+.staff-pair{font-family:'Bebas Neue',sans-serif;font-size:38px;line-height:1;margin-bottom:6px;}
+.staff-pair .n{color:var(--amber);}
+.staff-pair .sep{color:var(--border);font-size:26px;margin:0 3px;}
+.staff-pair .d{color:var(--text);}
+.staff-desc-s{font-size:12px;color:var(--muted);line-height:1.5;}
 
-  h1 span { color: var(--accent); }
+/* CHECKLIST */
+.check-cols{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:40px;}
+@media(max-width:540px){.check-cols{grid-template-columns:1fr;}}
+.check-group{background:var(--white);border:1px solid var(--border);border-radius:12px;padding:20px 18px;box-shadow:var(--shadow-sm);}
+.cg-title{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--blue);margin-bottom:14px;padding-bottom:10px;border-bottom:1px solid var(--border);}
+.check-item{border-radius:8px;padding:8px 6px;margin-bottom:2px;transition:background .12s;}
+.check-item:hover{background:var(--bg);}
+.check-row{display:flex;align-items:flex-start;gap:10px;cursor:pointer;}
+.check-box{width:18px;height:18px;border:1.5px solid var(--border);border-radius:5px;flex-shrink:0;margin-top:2px;display:flex;align-items:center;justify-content:center;transition:all .2s;background:var(--white);}
+.check-item.done .check-box{background:var(--green);border-color:var(--green);}
+.check-item.done .check-box::after{content:'✓';font-size:11px;font-weight:700;color:#fff;}
+.check-item.done .check-text{text-decoration:line-through;color:var(--muted);}
+.check-text{font-size:13px;font-weight:500;color:var(--text);line-height:1.45;flex:1;transition:color .2s;}
+.assign-row{display:flex;align-items:center;gap:6px;margin-top:6px;margin-left:28px;}
+.assign-select{font-family:'DM Mono',monospace;font-size:10px;padding:3px 6px;border:1px solid var(--border);border-radius:4px;background:var(--surface);color:var(--muted);cursor:pointer;}
+.assign-select:focus{outline:none;border-color:var(--amber);}
+.assign-badge{font-family:'DM Mono',monospace;font-size:10px;padding:2px 8px;border-radius:4px;display:none;letter-spacing:.5px;}
+.done-by{font-size:10px;font-family:'DM Mono',monospace;color:var(--muted);margin-left:4px;}
 
-  .subtitle {
-    margin-top: 14px;
-    font-size: 14px;
-    color: var(--muted);
-    letter-spacing: 1px;
-  }
+/* TIPS */
+.tips-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:40px;}
+@media(max-width:540px){.tips-grid{grid-template-columns:1fr;}}
+.tip-card{background:var(--white);border:1px solid var(--border);border-radius:10px;padding:16px;box-shadow:var(--shadow-sm);display:flex;gap:12px;align-items:flex-start;}
+.tip-card:hover{border-color:var(--amber-border);}
+.tip-icon{font-size:20px;flex-shrink:0;line-height:1;margin-top:2px;}
+.tip-title{font-size:13px;font-weight:600;margin-bottom:4px;}
+.tip-body{font-size:12px;color:var(--muted);line-height:1.6;}
 
-  .section-label {
-    font-family: 'DM Mono', monospace;
-    font-size: 10px;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    color: var(--accent);
-    margin-bottom: 16px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
+/* TEAM SECTION */
+.team-section{background:var(--white);border:1px solid var(--border);border-radius:12px;padding:18px;margin-bottom:28px;box-shadow:var(--shadow-sm);}
+.team-list{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px;min-height:28px;}
+.team-pill{display:flex;align-items:center;gap:6px;font-size:11px;font-family:'DM Mono',monospace;padding:4px 10px;border-radius:99px;background:var(--amber-bg);border:1px solid var(--amber-border);color:var(--text);}
+.team-pill .swatch{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
+.team-pill .remove{cursor:pointer;color:var(--muted);font-size:14px;line-height:1;margin-left:2px;}
+.team-pill .remove:hover{color:var(--red);}
+.team-add-row{display:flex;gap:8px;}
+.team-input{flex:1;font-family:'DM Sans',sans-serif;font-size:13px;padding:7px 10px;border:1px solid var(--border);border-radius:6px;background:var(--bg);color:var(--text);}
+.team-input:focus{outline:none;border-color:var(--amber);}
+.team-add-btn{font-size:11px;padding:7px 14px;border:1px solid var(--amber);background:var(--amber-bg);border-radius:6px;color:var(--amber);cursor:pointer;font-family:'DM Mono',monospace;letter-spacing:1px;white-space:nowrap;font-weight:500;}
+.team-add-btn:hover{background:var(--amber);color:#fff;}
 
-  .section-label::after {
-    content: '';
-    flex: 1;
-    height: 1px;
-    background: var(--border);
-  }
-
-  /* TIMELINE */
-  .timeline-section { max-width: 760px; margin: 0 auto 48px; }
-
-  .timeline { display: flex; flex-direction: column; gap: 0; }
-
-  .tl-item {
-    display: grid;
-    grid-template-columns: 80px 24px 1fr;
-    gap: 0 16px;
-    align-items: start;
-    position: relative;
-  }
-
-  .tl-time {
-    text-align: right;
-    font-family: 'DM Mono', monospace;
-    font-size: 12px;
-    color: var(--accent);
-    padding-top: 16px;
-    line-height: 1.2;
-  }
-
-  .tl-line {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .tl-dot {
-    width: 10px; height: 10px;
-    border-radius: 50%;
-    background: var(--accent);
-    margin-top: 20px;
-    flex-shrink: 0;
-    position: relative;
-    z-index: 1;
-  }
-
-  .tl-connector {
-    width: 2px;
-    flex: 1;
-    min-height: 20px;
-    background: var(--border);
-    margin-top: 2px;
-  }
-
-  .tl-item:last-child .tl-connector { display: none; }
-
-  .tl-card {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    padding: 14px 18px;
-    margin-bottom: 12px;
-  }
-
-  .tl-title {
-    font-size: 15px;
-    font-weight: 600;
-    color: var(--text);
-    margin-bottom: 4px;
-  }
-
-  .tl-desc {
-    font-size: 13px;
-    color: var(--muted);
-    line-height: 1.6;
-  }
-
-  .tl-tag {
-    display: inline-block;
-    font-size: 10px;
-    font-family: 'DM Mono', monospace;
-    letter-spacing: 1px;
-    padding: 2px 8px;
-    border-radius: 4px;
-    margin-top: 8px;
-    text-transform: uppercase;
-  }
-
-  .tag-tour { background: rgba(75,157,232,.15); color: var(--accent2); border: 1px solid rgba(75,157,232,.3); }
-  .tag-qa { background: rgba(232,184,75,.12); color: var(--accent); border: 1px solid rgba(232,184,75,.3); }
-  .tag-ops { background: rgba(75,232,122,.12); color: var(--green); border: 1px solid rgba(75,232,122,.3); }
-  .tag-wrap { background: rgba(232,75,75,.12); color: var(--red); border: 1px solid rgba(232,75,75,.3); }
-
-  /* STAFFING GRID */
-  .staff-section { max-width: 760px; margin: 0 auto 48px; }
-
-  .staff-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 12px; }
-
-  .staff-card {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    padding: 18px 16px;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .staff-card::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0;
-    width: 3px; height: 100%;
-    border-radius: 3px 0 0 3px;
-  }
-
-  .staff-card.yellow::before { background: var(--accent); }
-  .staff-card.blue::before { background: var(--accent2); }
-  .staff-card.green::before { background: var(--green); }
-
-  .staff-role {
-    font-size: 11px;
-    color: var(--muted);
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    font-family: 'DM Mono', monospace;
-    margin-bottom: 8px;
-  }
-
-  .staff-pair {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 36px;
-    line-height: 1;
-    margin-bottom: 6px;
-  }
-
-  .staff-pair .num { color: var(--accent); }
-  .staff-pair .sep { color: var(--muted); font-size: 24px; margin: 0 4px; }
-  .staff-pair .dir { color: var(--text); }
-
-  .staff-desc {
-    font-size: 12px;
-    color: var(--muted);
-    line-height: 1.5;
-  }
-
-  /* CHECKLIST */
-  .check-section { max-width: 760px; margin: 0 auto 48px; }
-
-  .check-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-
-  @media (max-width: 520px) { .check-cols { grid-template-columns: 1fr; } }
-
-  .check-group {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    padding: 18px;
-  }
-
-  .check-group-title {
-    font-size: 12px;
-    font-family: 'DM Mono', monospace;
-    color: var(--accent2);
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    margin-bottom: 14px;
-    padding-bottom: 10px;
-    border-bottom: 1px solid var(--border);
-  }
-
-  .check-item {
-    display: flex;
-    align-items: flex-start;
-    gap: 10px;
-    padding: 8px 0;
-    border-bottom: 1px solid rgba(37,40,48,.7);
-    cursor: pointer;
-    transition: background .15s;
-    border-radius: 6px;
-    padding-left: 6px;
-    padding-right: 6px;
-  }
-
-  .check-item:last-child { border-bottom: none; }
-
-  .check-item:hover { background: rgba(255,255,255,.03); }
-
-  .check-box {
-    width: 18px; height: 18px;
-    border: 1.5px solid var(--border);
-    border-radius: 4px;
-    flex-shrink: 0;
-    margin-top: 1px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all .2s;
-    position: relative;
-  }
-
-  .check-item.done .check-box {
-    background: var(--green);
-    border-color: var(--green);
-  }
-
-  .check-item.done .check-box::after {
-    content: '✓';
-    font-size: 11px;
-    color: #0d0f12;
-    font-weight: 700;
-  }
-
-  .check-item.done .check-text {
-    text-decoration: line-through;
-    color: var(--muted);
-  }
-
-  .check-text {
-    font-size: 13px;
-    color: var(--text);
-    line-height: 1.5;
-    transition: color .2s;
-  }
-
-  /* TIPS */
-  .tips-section { max-width: 760px; margin: 0 auto 48px; }
-
-  .tips-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-  @media (max-width: 520px) { .tips-grid { grid-template-columns: 1fr; } }
-
-  .tip-card {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    padding: 18px;
-    display: flex;
-    gap: 14px;
-    align-items: flex-start;
-  }
-
-  .tip-icon {
-    font-size: 24px;
-    flex-shrink: 0;
-    line-height: 1;
-    margin-top: 2px;
-  }
-
-  .tip-title { font-size: 14px; font-weight: 600; margin-bottom: 6px; }
-  .tip-body { font-size: 12px; color: var(--muted); line-height: 1.6; }
-
-  /* PROGRESS BAR */
-  .progress-wrap { max-width: 760px; margin: 0 auto 32px; }
-  .progress-bar-bg {
-    height: 6px;
-    background: var(--border);
-    border-radius: 3px;
-    overflow: hidden;
-    margin-top: 8px;
-  }
-  .progress-bar-fill {
-    height: 100%;
-    background: linear-gradient(90deg, var(--accent), var(--green));
-    border-radius: 3px;
-    width: 0%;
-    transition: width .4s ease;
-  }
-  .progress-label {
-    display: flex;
-    justify-content: space-between;
-    font-family: 'DM Mono', monospace;
-    font-size: 11px;
-    color: var(--muted);
-    margin-top: 6px;
-  }
-  #progress-pct { color: var(--accent); }
+/* MODAL */
+.modal-bg{display:none;position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:200;align-items:center;justify-content:center;}
+.modal-bg.open{display:flex;}
+.modal{background:var(--white);border:1px solid var(--border);border-radius:14px;padding:28px;max-width:340px;width:90%;box-shadow:0 8px 40px rgba(0,0,0,.15);}
+.modal h2{font-family:'Bebas Neue',sans-serif;font-size:30px;margin-bottom:6px;color:var(--text);}
+.modal h2 span{color:var(--amber);}
+.modal p{font-size:13px;color:var(--muted);margin-bottom:16px;line-height:1.6;}
+.modal input{width:100%;font-family:'DM Sans',sans-serif;font-size:14px;padding:9px 12px;border:1.5px solid var(--border);border-radius:8px;background:var(--bg);color:var(--text);margin-bottom:10px;}
+.modal input:focus{outline:none;border-color:var(--amber);}
+.modal-btn{width:100%;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:600;padding:10px;border:none;border-radius:8px;background:var(--amber);color:#fff;cursor:pointer;}
+.modal-btn:hover{background:#a86c08;}
 </style>
 </head>
 <body>
 
+<!-- SETUP BANNER — hidden after config is pasted -->
+<div id="setup-banner">
+  <span class="setup-dot"></span>
+  <span>FIREBASE NOT CONFIGURED — </span>
+  <a href="#" onclick="document.getElementById('setup-banner').classList.add('hidden');return false;">
+    Paste your firebaseConfig below line 10 in the &lt;script&gt; at the bottom of this file, then re-open.
+  </a>
+</div>
+
+<!-- WHO ARE YOU MODAL -->
+<div class="modal-bg" id="modal">
+  <div class="modal">
+    <h2>Hey — <span>who are you?</span></h2>
+    <p>Enter your name so your teammates can see who checked off tasks and made assignments.</p>
+    <input type="text" id="name-input" placeholder="e.g. Chris, AGM, Lead 1..." maxlength="30" />
+    <button class="modal-btn" onclick="saveName()">Let's Go →</button>
+  </div>
+</div>
+
+<!-- HEADER -->
 <div class="header">
   <div class="eyebrow">Tolleson Site</div>
   <h1>Directors<br><span>Visit</span></h1>
   <div class="subtitle">Operational Game Plan &nbsp;·&nbsp; Next Week</div>
 </div>
 
-<!-- PROGRESS -->
-<div class="progress-wrap">
-  <div class="section-label">Prep Progress</div>
-  <div class="progress-bar-bg">
-    <div class="progress-bar-fill" id="progress-fill"></div>
-  </div>
-  <div class="progress-label">
-    <span id="progress-count">0 of 0 tasks complete</span>
-    <span id="progress-pct">0%</span>
-  </div>
+<!-- IDENTITY BAR -->
+<div class="identity-bar">
+  <span class="identity-label">Viewing as:</span>
+  <select class="identity-select" id="identity-select" onchange="switchUser()"></select>
+  <span class="sync-label">
+    <span class="sync-dot" id="sync-dot"></span>
+    <span id="sync-label">Connecting...</span>
+  </span>
 </div>
 
-<!-- TIMELINE -->
-<div class="timeline-section">
-  <div class="section-label">Day-Of Schedule</div>
+<div class="main">
+
+  <!-- TEAM -->
+  <div class="sec">Team</div>
+  <div class="team-section">
+    <div class="team-list" id="team-list"></div>
+    <div class="team-add-row">
+      <input class="team-input" type="text" id="team-input" placeholder="Add team member name..." maxlength="30" onkeydown="if(event.key==='Enter')addMember()"/>
+      <button class="team-add-btn" onclick="addMember()">+ Add</button>
+    </div>
+  </div>
+
+  <!-- PROGRESS -->
+  <div class="sec">Progress</div>
+  <div class="progress-card">
+    <div class="progress-top">
+      <div class="progress-title">Overall Completion</div>
+      <div class="progress-pct" id="pct">0%</div>
+    </div>
+    <div class="pbar-bg"><div class="pbar-fill" id="pbar"></div></div>
+    <div class="progress-sub" id="psub">0 of 0 tasks complete</div>
+    <div class="owner-progress" id="owner-progress"></div>
+  </div>
+
+  <!-- TIMELINE -->
+  <div class="sec">Day-Of Schedule</div>
   <div class="timeline">
-
-    <div class="tl-item">
-      <div class="tl-time">1:00 PM</div>
-      <div class="tl-line"><div class="tl-dot"></div><div class="tl-connector"></div></div>
-      <div class="tl-card">
-        <div class="tl-title">Directors Arrive</div>
-        <div class="tl-desc">Greet directors at entrance. Have water/refreshments ready. Confirm headcount and assign pairing groups.</div>
-        <span class="tl-tag tag-ops">Logistics</span>
-      </div>
-    </div>
-
-    <div class="tl-item">
-      <div class="tl-time">1:00–1:15</div>
-      <div class="tl-line"><div class="tl-dot"></div><div class="tl-connector"></div></div>
-      <div class="tl-card">
-        <div class="tl-title">Facility Tour — Setting the Stage</div>
-        <div class="tl-desc">Walk directors through vehicle quality flow. Highlight key touchpoints, equipment, and current production state.</div>
-        <span class="tl-tag tag-tour">Tour</span>
-      </div>
-    </div>
-
-    <div class="tl-item">
-      <div class="tl-time">1:15–1:30</div>
-      <div class="tl-line"><div class="tl-dot"></div><div class="tl-connector"></div></div>
-      <div class="tl-card">
-        <div class="tl-title">Intro with Chris & Candice</div>
-        <div class="tl-desc">Introduce yourselves — role, time in role. Share key Tolleson stats: weekly returns, LS, QCs, and production numbers.</div>
-        <span class="tl-tag tag-qa">QA Brief</span>
-      </div>
-    </div>
-
-    <div class="tl-item">
-      <div class="tl-time">1:30–3:30</div>
-      <div class="tl-line"><div class="tl-dot"></div><div class="tl-connector"></div></div>
-      <div class="tl-card">
-        <div class="tl-title">Lot Sweep &amp; Return QC</div>
-        <div class="tl-desc">2 hours of active floor work. Run lot sweep groups and return QC simultaneously. Use new car to shift personnel between groups as needed.</div>
-        <span class="tl-tag tag-qa">Core Activity</span>
-      </div>
-    </div>
-
-    <div class="tl-item">
-      <div class="tl-time">3:30–3:40</div>
-      <div class="tl-line"><div class="tl-dot"></div><div class="tl-connector"></div></div>
-      <div class="tl-card">
-        <div class="tl-title">Wrap &amp; Debrief</div>
-        <div class="tl-desc">Gather all groups. Recap observations, wins, and any action items. Keep it tight — shuttle leaves at 4.</div>
-        <span class="tl-tag tag-wrap">Debrief</span>
-      </div>
-    </div>
-
-    <div class="tl-item">
-      <div class="tl-time">4:00 PM</div>
-      <div class="tl-line"><div class="tl-dot"></div><div class="tl-connector"></div></div>
-      <div class="tl-card">
-        <div class="tl-title">Shuttle Out</div>
-        <div class="tl-desc">Confirm all directors have transportation. Ensure shuttle is staged and ready by 3:55.</div>
-        <span class="tl-tag tag-ops">Logistics</span>
-      </div>
-    </div>
-
+    <div class="tl-item"><div class="tl-time">1:00 PM</div><div class="tl-line"><div class="tl-dot"></div><div class="tl-connector"></div></div><div class="tl-card"><div class="tl-title">Directors Arrive</div><div class="tl-desc">Greet at entrance. Have water/refreshments ready. Confirm headcount and assign pairing groups.</div><span class="tl-tag tag-ops">Logistics</span></div></div>
+    <div class="tl-item"><div class="tl-time">1:00–1:15</div><div class="tl-line"><div class="tl-dot"></div><div class="tl-connector"></div></div><div class="tl-card"><div class="tl-title">Facility Tour — Setting the Stage</div><div class="tl-desc">Walk directors through vehicle quality flow. Highlight key touchpoints, equipment, and current production state.</div><span class="tl-tag tag-tour">Tour</span></div></div>
+    <div class="tl-item"><div class="tl-time">1:15–1:30</div><div class="tl-line"><div class="tl-dot"></div><div class="tl-connector"></div></div><div class="tl-card"><div class="tl-title">Intro with Chris & Candice</div><div class="tl-desc">Introduce yourselves — role, time in role. Share key Tolleson stats: weekly returns, LS, QCs, and production numbers.</div><span class="tl-tag tag-qa">QA Brief</span></div></div>
+    <div class="tl-item"><div class="tl-time">1:30–3:30</div><div class="tl-line"><div class="tl-dot"></div><div class="tl-connector"></div></div><div class="tl-card"><div class="tl-title">Lot Sweep & Return QC</div><div class="tl-desc">2 hours of active floor work. Run lot sweep groups and return QC simultaneously. Use new car to shift personnel as needed.</div><span class="tl-tag tag-qa">Core Activity</span></div></div>
+    <div class="tl-item"><div class="tl-time">3:30–3:40</div><div class="tl-line"><div class="tl-dot"></div><div class="tl-connector"></div></div><div class="tl-card"><div class="tl-title">Wrap & Debrief</div><div class="tl-desc">Gather all groups. Recap observations, wins, and action items. Keep it tight — shuttle leaves at 4.</div><span class="tl-tag tag-wrap">Debrief</span></div></div>
+    <div class="tl-item"><div class="tl-time">4:00 PM</div><div class="tl-line"><div class="tl-dot"></div><div class="tl-connector"></div></div><div class="tl-card"><div class="tl-title">Shuttle Out</div><div class="tl-desc">All directors loaded and departing. Ensure shuttle is staged and ready by 3:55.</div><span class="tl-tag tag-ops">Logistics</span></div></div>
   </div>
-</div>
 
-<!-- STAFFING -->
-<div class="staff-section">
-  <div class="section-label">Staffing Pairings — 16 Directors Total</div>
+  <!-- STAFFING -->
+  <div class="sec">Staffing Pairings — 16 Directors Total</div>
   <div class="staff-grid">
-
-    <div class="staff-card yellow">
-      <div class="staff-role">Return QC</div>
-      <div class="staff-pair">
-        <span class="num">2</span><span class="sep">:</span><span class="dir">4</span>
-      </div>
-      <div class="staff-desc">2 Return QC techs paired with 4 directors</div>
-    </div>
-
-    <div class="staff-card blue">
-      <div class="staff-role">Lot Sweep</div>
-      <div class="staff-pair">
-        <span class="num">5</span><span class="sep">:</span><span class="dir">10</span>
-      </div>
-      <div class="staff-desc">5 Lot Sweep techs paired with 10 directors</div>
-    </div>
-
-    <div class="staff-card green">
-      <div class="staff-role">Recon QC</div>
-      <div class="staff-pair">
-        <span class="num">1</span><span class="sep">:</span><span class="dir">2</span>
-      </div>
-      <div class="staff-desc">1 Recon QC tech paired with 2 directors</div>
-    </div>
-
-    <div class="staff-card yellow">
-      <div class="staff-role">OT Coverage</div>
-      <div class="staff-pair" style="font-size:28px; padding-top:4px; color: var(--accent);">
-        Approved
-      </div>
-      <div class="staff-desc">OT for all Return Inspection Techs — confirm schedule early</div>
-    </div>
-
+    <div class="staff-card y"><div class="staff-role">Return QC</div><div class="staff-pair"><span class="n">2</span><span class="sep">:</span><span class="d">4</span></div><div class="staff-desc-s">2 Return QC techs with 4 directors</div></div>
+    <div class="staff-card b"><div class="staff-role">Lot Sweep</div><div class="staff-pair"><span class="n">5</span><span class="sep">:</span><span class="d">10</span></div><div class="staff-desc-s">5 Lot Sweep techs with 10 directors</div></div>
+    <div class="staff-card g"><div class="staff-role">Recon QC</div><div class="staff-pair"><span class="n">1</span><span class="sep">:</span><span class="d">2</span></div><div class="staff-desc-s">1 Recon QC tech with 2 directors</div></div>
+    <div class="staff-card y"><div class="staff-role">OT Coverage</div><div class="staff-pair" style="font-size:22px;color:var(--amber);padding-top:6px;font-family:'DM Sans';font-weight:600;">Confirm Early</div><div class="staff-desc-s">OT for all Return Inspection Techs</div></div>
   </div>
-</div>
 
-<!-- CHECKLISTS -->
-<div class="check-section">
-  <div class="section-label">Pre-Visit Checklist</div>
+  <!-- CHECKLIST -->
+  <div class="sec">Pre-Visit Checklist</div>
   <div class="check-cols">
 
     <div class="check-group">
-      <div class="check-group-title">🗓 People & Scheduling</div>
-      <div class="check-item" onclick="toggle(this)">
-        <div class="check-box"></div>
-        <div class="check-text">Confirm OT for all Return Inspection Techs</div>
-      </div>
-      <div class="check-item" onclick="toggle(this)">
-        <div class="check-box"></div>
-        <div class="check-text">Notify Chris & Candice of intro segment timing (15 min)</div>
-      </div>
-      <div class="check-item" onclick="toggle(this)">
-        <div class="check-box"></div>
-        <div class="check-text">Assign staff to pairing groups (Return QC, Lot Sweep, Recon QC)</div>
-      </div>
-      <div class="check-item" onclick="toggle(this)">
-        <div class="check-box"></div>
-        <div class="check-text">Confirm director headcount (16 expected)</div>
-      </div>
-      <div class="check-item" onclick="toggle(this)">
-        <div class="check-box"></div>
-        <div class="check-text">Stage new car for personnel shifts as needed</div>
-      </div>
-      <div class="check-item" onclick="toggle(this)">
-        <div class="check-box"></div>
-        <div class="check-text">Confirm shuttle is booked and staged for 4:00 PM departure</div>
-      </div>
+      <div class="cg-title">🗓 People & Scheduling</div>
+      <div class="check-item" data-id="ot-confirm"><div class="check-row" onclick="toggleTask('ot-confirm')"><div class="check-box"></div><div class="check-text">Confirm OT for all Return Inspection Techs</div></div><div class="assign-row"><select class="assign-select" onchange="assignTask('ot-confirm',this.value)"><option value="">— Assign to —</option></select><span class="assign-badge" id="badge-ot-confirm"></span><span class="done-by" id="doneby-ot-confirm"></span></div></div>
+      <div class="check-item" data-id="notify-cc"><div class="check-row" onclick="toggleTask('notify-cc')"><div class="check-box"></div><div class="check-text">Notify Chris & Candice of intro segment timing (15 min)</div></div><div class="assign-row"><select class="assign-select" onchange="assignTask('notify-cc',this.value)"><option value="">— Assign to —</option></select><span class="assign-badge" id="badge-notify-cc"></span><span class="done-by" id="doneby-notify-cc"></span></div></div>
+      <div class="check-item" data-id="assign-groups"><div class="check-row" onclick="toggleTask('assign-groups')"><div class="check-box"></div><div class="check-text">Assign staff to pairing groups (Return QC, Lot Sweep, Recon QC)</div></div><div class="assign-row"><select class="assign-select" onchange="assignTask('assign-groups',this.value)"><option value="">— Assign to —</option></select><span class="assign-badge" id="badge-assign-groups"></span><span class="done-by" id="doneby-assign-groups"></span></div></div>
+      <div class="check-item" data-id="headcount"><div class="check-row" onclick="toggleTask('headcount')"><div class="check-box"></div><div class="check-text">Confirm director headcount (16 expected)</div></div><div class="assign-row"><select class="assign-select" onchange="assignTask('headcount',this.value)"><option value="">— Assign to —</option></select><span class="assign-badge" id="badge-headcount"></span><span class="done-by" id="doneby-headcount"></span></div></div>
+      <div class="check-item" data-id="new-car"><div class="check-row" onclick="toggleTask('new-car')"><div class="check-box"></div><div class="check-text">Stage new car for personnel shifts as needed</div></div><div class="assign-row"><select class="assign-select" onchange="assignTask('new-car',this.value)"><option value="">— Assign to —</option></select><span class="assign-badge" id="badge-new-car"></span><span class="done-by" id="doneby-new-car"></span></div></div>
+      <div class="check-item" data-id="shuttle"><div class="check-row" onclick="toggleTask('shuttle')"><div class="check-box"></div><div class="check-text">Confirm shuttle is booked and staged for 4:00 PM departure</div></div><div class="assign-row"><select class="assign-select" onchange="assignTask('shuttle',this.value)"><option value="">— Assign to —</option></select><span class="assign-badge" id="badge-shuttle"></span><span class="done-by" id="doneby-shuttle"></span></div></div>
     </div>
 
     <div class="check-group">
-      <div class="check-group-title">📋 Stats & Talking Points</div>
-      <div class="check-item" onclick="toggle(this)">
-        <div class="check-box"></div>
-        <div class="check-text">Pull current weekly return numbers</div>
-      </div>
-      <div class="check-item" onclick="toggle(this)">
-        <div class="check-box"></div>
-        <div class="check-text">Prep LS (lot sweep) stats</div>
-      </div>
-      <div class="check-item" onclick="toggle(this)">
-        <div class="check-box"></div>
-        <div class="check-text">Pull QC pass/fail rates</div>
-      </div>
-      <div class="check-item" onclick="toggle(this)">
-        <div class="check-box"></div>
-        <div class="check-text">Compile production volume numbers</div>
-      </div>
-      <div class="check-item" onclick="toggle(this)">
-        <div class="check-box"></div>
-        <div class="check-text">Both Chris & Candice prep their 2-min personal intros</div>
-      </div>
+      <div class="cg-title">📋 Stats & Talking Points</div>
+      <div class="check-item" data-id="returns"><div class="check-row" onclick="toggleTask('returns')"><div class="check-box"></div><div class="check-text">Pull current weekly return numbers</div></div><div class="assign-row"><select class="assign-select" onchange="assignTask('returns',this.value)"><option value="">— Assign to —</option></select><span class="assign-badge" id="badge-returns"></span><span class="done-by" id="doneby-returns"></span></div></div>
+      <div class="check-item" data-id="ls-stats"><div class="check-row" onclick="toggleTask('ls-stats')"><div class="check-box"></div><div class="check-text">Prep LS (lot sweep) stats</div></div><div class="assign-row"><select class="assign-select" onchange="assignTask('ls-stats',this.value)"><option value="">— Assign to —</option></select><span class="assign-badge" id="badge-ls-stats"></span><span class="done-by" id="doneby-ls-stats"></span></div></div>
+      <div class="check-item" data-id="qc-rates"><div class="check-row" onclick="toggleTask('qc-rates')"><div class="check-box"></div><div class="check-text">Pull QC pass/fail rates</div></div><div class="assign-row"><select class="assign-select" onchange="assignTask('qc-rates',this.value)"><option value="">— Assign to —</option></select><span class="assign-badge" id="badge-qc-rates"></span><span class="done-by" id="doneby-qc-rates"></span></div></div>
+      <div class="check-item" data-id="production"><div class="check-row" onclick="toggleTask('production')"><div class="check-box"></div><div class="check-text">Compile production volume numbers</div></div><div class="assign-row"><select class="assign-select" onchange="assignTask('production',this.value)"><option value="">— Assign to —</option></select><span class="assign-badge" id="badge-production"></span><span class="done-by" id="doneby-production"></span></div></div>
+      <div class="check-item" data-id="intros"><div class="check-row" onclick="toggleTask('intros')"><div class="check-box"></div><div class="check-text">Both Chris & Candice prep their 2-min personal intros</div></div><div class="assign-row"><select class="assign-select" onchange="assignTask('intros',this.value)"><option value="">— Assign to —</option></select><span class="assign-badge" id="badge-intros"></span><span class="done-by" id="doneby-intros"></span></div></div>
     </div>
 
     <div class="check-group">
-      <div class="check-group-title">🛠 Equipment & Supplies</div>
-      <div class="check-item" onclick="toggle(this)">
-        <div class="check-box"></div>
-        <div class="check-text">Count & charge tablets — need 1 per director on Lot Sweep (min 10)</div>
-      </div>
-      <div class="check-item" onclick="toggle(this)">
-        <div class="check-box"></div>
-        <div class="check-text">Stage cooler with extra water bottles on the lot</div>
-      </div>
-      <div class="check-item" onclick="toggle(this)">
-        <div class="check-box"></div>
-        <div class="check-text">Test all tablets — confirm login and app access</div>
-      </div>
-      <div class="check-item" onclick="toggle(this)">
-        <div class="check-box"></div>
-        <div class="check-text">Confirm new car is fueled and available</div>
-      </div>
+      <div class="cg-title">🛠 Equipment & Supplies</div>
+      <div class="check-item" data-id="tablets-count"><div class="check-row" onclick="toggleTask('tablets-count')"><div class="check-box"></div><div class="check-text">Count & charge tablets — 1 per Lot Sweep director (min 10)</div></div><div class="assign-row"><select class="assign-select" onchange="assignTask('tablets-count',this.value)"><option value="">— Assign to —</option></select><span class="assign-badge" id="badge-tablets-count"></span><span class="done-by" id="doneby-tablets-count"></span></div></div>
+      <div class="check-item" data-id="tablets-test"><div class="check-row" onclick="toggleTask('tablets-test')"><div class="check-box"></div><div class="check-text">Test all tablets — confirm login and app access</div></div><div class="assign-row"><select class="assign-select" onchange="assignTask('tablets-test',this.value)"><option value="">— Assign to —</option></select><span class="assign-badge" id="badge-tablets-test"></span><span class="done-by" id="doneby-tablets-test"></span></div></div>
+      <div class="check-item" data-id="water"><div class="check-row" onclick="toggleTask('water')"><div class="check-box"></div><div class="check-text">Stage cooler with extra water bottles on the lot</div></div><div class="assign-row"><select class="assign-select" onchange="assignTask('water',this.value)"><option value="">— Assign to —</option></select><span class="assign-badge" id="badge-water"></span><span class="done-by" id="doneby-water"></span></div></div>
+      <div class="check-item" data-id="car-fuel"><div class="check-row" onclick="toggleTask('car-fuel')"><div class="check-box"></div><div class="check-text">Confirm new car is fueled and available</div></div><div class="assign-row"><select class="assign-select" onchange="assignTask('car-fuel',this.value)"><option value="">— Assign to —</option></select><span class="assign-badge" id="badge-car-fuel"></span><span class="done-by" id="doneby-car-fuel"></span></div></div>
     </div>
 
     <div class="check-group">
-      <div class="check-group-title">🏭 Facility & Presentation</div>
-      <div class="check-item" onclick="toggle(this)">
-        <div class="check-box"></div>
-        <div class="check-text">Walk the tour route — verify it's clean and presentable</div>
-      </div>
-      <div class="check-item" onclick="toggle(this)">
-        <div class="check-box"></div>
-        <div class="check-text">Brief all floor staff on visit expectations and professionalism</div>
-      </div>
-      <div class="check-item" onclick="toggle(this)">
-        <div class="check-box"></div>
-        <div class="check-text">Ensure lot is organized and lot sweep vehicles are accessible</div>
-      </div>
-      <div class="check-item" onclick="toggle(this)">
-        <div class="check-box"></div>
-        <div class="check-text">Recon area staged and ready for QC demonstration</div>
-      </div>
-      <div class="check-item" onclick="toggle(this)">
-        <div class="check-box"></div>
-        <div class="check-text">Identify fallback plan if weather affects outdoor activities</div>
-      </div>
+      <div class="cg-title">🏭 Facility & Presentation</div>
+      <div class="check-item" data-id="tour-walk"><div class="check-row" onclick="toggleTask('tour-walk')"><div class="check-box"></div><div class="check-text">Walk the tour route — verify it's clean and presentable</div></div><div class="assign-row"><select class="assign-select" onchange="assignTask('tour-walk',this.value)"><option value="">— Assign to —</option></select><span class="assign-badge" id="badge-tour-walk"></span><span class="done-by" id="doneby-tour-walk"></span></div></div>
+      <div class="check-item" data-id="staff-brief"><div class="check-row" onclick="toggleTask('staff-brief')"><div class="check-box"></div><div class="check-text">Brief all floor staff on visit expectations and professionalism</div></div><div class="assign-row"><select class="assign-select" onchange="assignTask('staff-brief',this.value)"><option value="">— Assign to —</option></select><span class="assign-badge" id="badge-staff-brief"></span><span class="done-by" id="doneby-staff-brief"></span></div></div>
+      <div class="check-item" data-id="lot-org"><div class="check-row" onclick="toggleTask('lot-org')"><div class="check-box"></div><div class="check-text">Ensure lot is organized and lot sweep vehicles are accessible</div></div><div class="assign-row"><select class="assign-select" onchange="assignTask('lot-org',this.value)"><option value="">— Assign to —</option></select><span class="assign-badge" id="badge-lot-org"></span><span class="done-by" id="doneby-lot-org"></span></div></div>
+      <div class="check-item" data-id="recon-stage"><div class="check-row" onclick="toggleTask('recon-stage')"><div class="check-box"></div><div class="check-text">Recon area staged and ready for QC demonstration</div></div><div class="assign-row"><select class="assign-select" onchange="assignTask('recon-stage',this.value)"><option value="">— Assign to —</option></select><span class="assign-badge" id="badge-recon-stage"></span><span class="done-by" id="doneby-recon-stage"></span></div></div>
+      <div class="check-item" data-id="weather"><div class="check-row" onclick="toggleTask('weather')"><div class="check-box"></div><div class="check-text">Identify fallback plan if weather affects outdoor activities</div></div><div class="assign-row"><select class="assign-select" onchange="assignTask('weather',this.value)"><option value="">— Assign to —</option></select><span class="assign-badge" id="badge-weather"></span><span class="done-by" id="doneby-weather"></span></div></div>
     </div>
 
   </div>
-</div>
 
-<!-- TIPS -->
-<div class="tips-section">
-  <div class="section-label">Tips for Success</div>
+  <!-- TIPS -->
+  <div class="sec">Tips for Success</div>
   <div class="tips-grid">
-    <div class="tip-card">
-      <div class="tip-icon">⏱</div>
-      <div>
-        <div class="tip-title">Guard the Clock</div>
-        <div class="tip-body">2 hours of floor time goes fast with 16 directors. Designate a timekeeper and give groups a 15-min warning before regrouping.</div>
-      </div>
-    </div>
-    <div class="tip-card">
-      <div class="tip-icon">📊</div>
-      <div>
-        <div class="tip-title">Lead with Data</div>
-        <div class="tip-body">Have your stats printed or on a device. Directors appreciate specifics — weekly return volume, QC rates, production throughput.</div>
-      </div>
-    </div>
-    <div class="tip-card">
-      <div class="tip-icon">🚗</div>
-      <div>
-        <div class="tip-title">New Car as Flex Asset</div>
-        <div class="tip-body">If groups get uneven or a director wants to see a different area, use the new car to move people quickly without disrupting the flow.</div>
-      </div>
-    </div>
-    <div class="tip-card">
-      <div class="tip-icon">💧</div>
-      <div>
-        <div class="tip-title">Hospitality Details Matter</div>
-        <div class="tip-body">Water on the lot signals you thought ahead. Small things like this set a professional tone and show operational awareness.</div>
-      </div>
-    </div>
-    <div class="tip-card">
-      <div class="tip-icon">📱</div>
-      <div>
-        <div class="tip-title">Tablet Readiness</div>
-        <div class="tip-body">Charge the night before. Confirm login credentials work. A tablet that won't log in during a director visit is a distraction you don't want.</div>
-      </div>
-    </div>
-    <div class="tip-card">
-      <div class="tip-icon">🎯</div>
-      <div>
-        <div class="tip-title">Strong Debrief Close</div>
-        <div class="tip-body">End with confidence. A 1–2 sentence summary of what they saw and one thing you're proud of leaves a lasting impression before the shuttle.</div>
-      </div>
-    </div>
+    <div class="tip-card"><div class="tip-icon">⏱</div><div><div class="tip-title">Guard the Clock</div><div class="tip-body">2 hours of floor time goes fast with 16 directors. Designate a timekeeper and give groups a 15-min warning before regrouping.</div></div></div>
+    <div class="tip-card"><div class="tip-icon">📊</div><div><div class="tip-title">Lead with Data</div><div class="tip-body">Have your stats printed or on a device. Directors appreciate specifics — weekly return volume, QC rates, production throughput.</div></div></div>
+    <div class="tip-card"><div class="tip-icon">🚗</div><div><div class="tip-title">New Car as Flex Asset</div><div class="tip-body">If groups get uneven or a director wants to see a different area, use the new car to move people without disrupting the flow.</div></div></div>
+    <div class="tip-card"><div class="tip-icon">💧</div><div><div class="tip-title">Hospitality Details Matter</div><div class="tip-body">Water on the lot signals you thought ahead. Small things like this set a professional tone and show operational awareness.</div></div></div>
+    <div class="tip-card"><div class="tip-icon">📱</div><div><div class="tip-title">Tablet Readiness</div><div class="tip-body">Charge the night before. Confirm login credentials work. A tablet that won't log in during a director visit is a distraction you don't want.</div></div></div>
+    <div class="tip-card"><div class="tip-icon">🎯</div><div><div class="tip-title">Strong Debrief Close</div><div class="tip-body">End with confidence. A 1–2 sentence summary of what they saw and one thing you're proud of leaves a lasting impression before the shuttle.</div></div></div>
   </div>
+
 </div>
 
-<script>
-  function toggle(el) {
-    el.classList.toggle('done');
-    updateProgress();
+<!-- ============================================================
+     STEP 1: Go to https://console.firebase.google.com
+     STEP 2: Click "Add project" → name it "directors-visit" → Continue
+     STEP 3: Click the </> Web icon → name it "directors-visit" → Register app
+     STEP 4: Copy ONLY the firebaseConfig object and paste it below,
+             replacing the placeholder object.
+     STEP 5: In Firebase console → Build → Realtime Database → Create database
+             → Start in TEST MODE → Enable
+     STEP 6: Upload index.html to GitHub Pages and share the URL!
+     ============================================================ -->
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-app.js";
+  import { getDatabase, ref, onValue, set, update } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-database.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyD1W87SodsQzKpXn5zIaugarJGNayYIHh8",
+    authDomain: "directors-visit.firebaseapp.com",
+    databaseURL: "https://directors-visit-default-rtdb.firebaseio.com",
+    projectId: "directors-visit",
+    storageBucket: "directors-visit.firebasestorage.app",
+    messagingSenderId: "145175950574",
+    appId: "1:145175950574:web:c9c8178a2926d1230b2fff"
+  };
+
+  const COLORS = ['#c07d0a','#2563c4','#1a9455','#6b3fc4','#c42525','#0e7c7b','#a03080'];
+  function colorFor(name){ let h=0; for(let c of name||'') h=(h*31+c.charCodeAt(0))%COLORS.length; return COLORS[h]; }
+
+  // Check if configured
+  if(firebaseConfig.apiKey === 'PASTE_YOUR_API_KEY'){
+    document.getElementById('setup-banner').style.display='flex';
+  } else {
+    document.getElementById('setup-banner').classList.add('hidden');
   }
 
-  function updateProgress() {
-    const all = document.querySelectorAll('.check-item');
-    const done = document.querySelectorAll('.check-item.done');
-    const pct = Math.round((done.length / all.length) * 100);
-    document.getElementById('progress-fill').style.width = pct + '%';
-    document.getElementById('progress-count').textContent = `${done.length} of ${all.length} tasks complete`;
-    document.getElementById('progress-pct').textContent = pct + '%';
+  const app = initializeApp(firebaseConfig);
+  const db  = getDatabase(app);
+
+  let me = localStorage.getItem('dv_me') || '';
+  let teamMembers = [];
+  let taskState   = {};
+
+  // ── SYNC STATUS ──────────────────────────────────
+  function setSync(ok){
+    document.getElementById('sync-dot').className = 'sync-dot'+(ok?' live':' error');
+    document.getElementById('sync-label').textContent = ok ? 'Live — changes sync instantly' : 'Connection error';
   }
 
-  updateProgress();
+  // ── REAL-TIME LISTENERS ──────────────────────────
+  onValue(ref(db,'dv/team'), snap => {
+    teamMembers = snap.val() || [];
+    renderTeam();
+    refreshSelects();
+    renderOwnerProgress();
+    populateIdentitySelect();
+  }, ()=> setSync(false));
+
+  onValue(ref(db,'dv/tasks'), snap => {
+    taskState = snap.val() || {};
+    renderTasks();
+    renderProgress();
+    setSync(true);
+  }, ()=> setSync(false));
+
+  // ── IDENTITY ─────────────────────────────────────
+  function populateIdentitySelect(){
+    const sel = document.getElementById('identity-select');
+    const cur = me;
+    sel.innerHTML = teamMembers.map(m=>`<option value="${m}"${m===cur?' selected':''}>${m}</option>`).join('');
+    if(!me && teamMembers.length){ me=teamMembers[0]; localStorage.setItem('dv_me',me); }
+  }
+
+  window.switchUser = function(){
+    me = document.getElementById('identity-select').value;
+    localStorage.setItem('dv_me', me);
+  };
+
+  window.saveName = function(){
+    const val = document.getElementById('name-input').value.trim();
+    if(!val) return;
+    me = val;
+    localStorage.setItem('dv_me', me);
+    document.getElementById('modal').classList.remove('open');
+    if(!teamMembers.includes(me)){
+      teamMembers.push(me);
+      set(ref(db,'dv/team'), teamMembers);
+    } else {
+      populateIdentitySelect();
+    }
+  };
+
+  document.getElementById('name-input').addEventListener('keydown', e=>{ if(e.key==='Enter') window.saveName(); });
+
+  // ── TEAM ─────────────────────────────────────────
+  function renderTeam(){
+    const list = document.getElementById('team-list');
+    if(!teamMembers.length){
+      list.innerHTML = '<span style="font-size:11px;color:var(--muted);font-family:DM Mono,monospace;">No team members yet</span>';
+      return;
+    }
+    list.innerHTML = teamMembers.map(m=>
+      `<div class="team-pill">
+        <span class="swatch" style="background:${colorFor(m)}"></span>${m}
+        <span class="remove" onclick="removeMember('${m}')">×</span>
+      </div>`
+    ).join('');
+  }
+
+  window.addMember = function(){
+    const input = document.getElementById('team-input');
+    const name = input.value.trim();
+    if(!name || teamMembers.includes(name)) return;
+    teamMembers.push(name);
+    input.value = '';
+    set(ref(db,'dv/team'), teamMembers);
+  };
+
+  window.removeMember = function(name){
+    teamMembers = teamMembers.filter(m=>m!==name);
+    set(ref(db,'dv/team'), teamMembers);
+    // Clear assignments for removed member
+    const updates = {};
+    Object.keys(taskState).forEach(id=>{
+      if(taskState[id]?.assignee === name) updates[`dv/tasks/${id}/assignee`] = '';
+    });
+    if(Object.keys(updates).length) update(ref(db), updates);
+  };
+
+  function refreshSelects(){
+    document.querySelectorAll('.assign-select').forEach(sel => {
+      const id = sel.closest('.check-item').dataset.id;
+      const cur = taskState[id]?.assignee || '';
+      sel.innerHTML = '<option value="">— Assign to —</option>' +
+        teamMembers.map(m=>`<option value="${m}"${m===cur?' selected':''}>${m}</option>`).join('');
+    });
+  }
+
+  // ── TASKS ─────────────────────────────────────────
+  window.toggleTask = function(id){
+    const cur = taskState[id] || {};
+    const nowDone = !cur.done;
+    update(ref(db), {
+      [`dv/tasks/${id}/done`]:   nowDone,
+      [`dv/tasks/${id}/doneBy`]: nowDone ? me : '',
+      [`dv/tasks/${id}/doneAt`]: nowDone ? new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'}) : ''
+    });
+  };
+
+  window.assignTask = function(id, assignee){
+    update(ref(db), { [`dv/tasks/${id}/assignee`]: assignee });
+  };
+
+  function renderTasks(){
+    document.querySelectorAll('.check-item').forEach(el => {
+      const id = el.dataset.id;
+      const s  = taskState[id] || {};
+      if(s.done) el.classList.add('done'); else el.classList.remove('done');
+
+      // badge
+      const badge = document.getElementById('badge-'+id);
+      if(badge){
+        if(s.assignee){
+          const c = colorFor(s.assignee);
+          badge.style.cssText = `display:inline-block;background:${c}18;color:${c};border:1px solid ${c}44;border-radius:4px;padding:2px 8px;font-family:DM Mono,monospace;font-size:10px;`;
+          badge.textContent = s.assignee;
+        } else {
+          badge.style.display='none';
+        }
+      }
+      // done-by
+      const db2 = document.getElementById('doneby-'+id);
+      if(db2) db2.textContent = s.done && s.doneBy ? `✓ ${s.doneBy} ${s.doneAt||''}` : '';
+
+      // sync select value
+      const sel = el.querySelector('.assign-select');
+      if(sel && s.assignee) sel.value = s.assignee;
+    });
+  }
+
+  function renderProgress(){
+    const ids   = Array.from(document.querySelectorAll('.check-item')).map(e=>e.dataset.id);
+    const total = ids.length;
+    const done  = ids.filter(id=>taskState[id]?.done).length;
+    const pct   = total ? Math.round(done/total*100) : 0;
+    document.getElementById('pbar').style.width = pct+'%';
+    document.getElementById('pct').textContent  = pct+'%';
+    document.getElementById('psub').textContent =
+      done===total && total>0 ? "🎉 All done — you're ready!" : `${done} of ${total} tasks complete`;
+    renderOwnerProgress();
+  }
+
+  function renderOwnerProgress(){
+    const ids = Array.from(document.querySelectorAll('.check-item')).map(e=>e.dataset.id);
+    const map = {};
+    ids.forEach(id=>{
+      const s = taskState[id]||{};
+      if(s.assignee){
+        if(!map[s.assignee]) map[s.assignee]={total:0,done:0};
+        map[s.assignee].total++;
+        if(s.done) map[s.assignee].done++;
+      }
+    });
+    const op = document.getElementById('owner-progress');
+    const entries = Object.entries(map);
+    if(!entries.length){
+      op.innerHTML = '<span class="owner-chip">Assign tasks to see per-person progress</span>';
+      return;
+    }
+    op.innerHTML = entries.map(([name,v])=>{
+      const c=colorFor(name);
+      return `<span class="owner-chip" style="border-color:${c}55;background:${c}11;color:${c}cc;">${name}: ${v.done}/${v.total}</span>`;
+    }).join('');
+  }
+
+  // ── INIT ─────────────────────────────────────────
+  if(!me){
+    document.getElementById('modal').classList.add('open');
+    setTimeout(()=>document.getElementById('name-input').focus(),100);
+  }
 </script>
 </body>
 </html>
